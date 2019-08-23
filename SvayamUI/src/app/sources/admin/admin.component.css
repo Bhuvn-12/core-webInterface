@@ -1,0 +1,14 @@
+table {
+    width: 100%;
+  }
+  ol{
+     
+      color:black;
+  }
+
+  th{
+      font-size:bold;
+  }
+  .center{
+      text-align: center;
+  }

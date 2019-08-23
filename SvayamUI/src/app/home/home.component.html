@@ -1,0 +1,117 @@
+<div class="row-border border">
+  <div class="col-12 ">
+    <div class="d-flex flex-row  ">
+      <h4><b>ANNOUNCEMENTS</b></h4>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="card border mb-3">
+          <div class="card-header bg-transparent "><b>{{announcemetArr[0]?.heading}}</b></div>
+          <div class="card-body text">
+              <marquee  direction="left">
+                  <img src="{{imageUrlArr[0]}}" alt="image" height="100px"  >
+                  </marquee>
+            
+          </div>
+          <div class="card-footer bg-transparent "><textarea  maxlength="100" class="input_desc" value="{{announcemetArr[0]?.description}}" readonly id="textA0" data-toggle="popover" data-placement="top" data-content="" (click)="popUp(0)"></textarea></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card border mb-3">
+          <div class="card-header bg-transparent "><b>{{announcemetArr[1]?.heading}}</b></div>
+          <div class="card-body text">
+            <img src="{{imageUrlArr[1]}}" alt="image" height="100px"  >
+          </div>
+          <div class="card-footer bg-transparent "><textarea maxlength="100" class="input_desc" value="{{announcemetArr[1]?.description}}"  readonly id="textA1" data-toggle="popover" data-placement="top" data-content="" (click)="popUp(1)"></textarea></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card border mb-3">
+          <div class="card-header bg-transparent "><b>{{announcemetArr[2]?.heading}}</b></div>
+          <div class="card-body text">
+            <img src="{{imageUrlArr[2]}}" alt="image" height="100px">
+          </div>
+          <div class="card-footer bg-transparent "><textarea maxlength="100" class="input_desc" value="{{announcemetArr[2]?.description}}"   readonly id="textA2" data-toggle="popover" data-placement="top" data-content="" (click)="popUp(2)"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row-border border">
+  <div class="col-12 ">
+    <div class="d-flex flex-row  ">
+      <h4><b>SYSTEM INFORMATION</b></h4>
+    </div>
+    <div class="row">
+      <div class="col">   
+        <div class="card border mb-3" >
+          <div class="card-header bg-transparent "><b>TRIAL BALANCE :  {{totalOfTrialbal.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}</b>
+          </div>
+          <div class="card-body text">
+          
+             <canvas id="trialBalChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col" >
+        <div class="card border mb-3">
+          <div class="card-header bg-transparent"><b>SYSTEM STATE</b></div>
+          <div class="card-body text" >
+           <canvas id="sysInfoChart" ></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row-border border">
+    <div class="col-12 ">
+      <div class="d-flex flex-row  ">
+        <h4><b>TUTORIALS</b></h4>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="card border mb-3">
+            <div class="card-header bg-transparent ">{{tutorialArr[0]?.heading}}</div>
+            <div class="card-body text" >
+                <textarea maxlength="270" class="input_tutorial" value="{{tutorialArr[0]?.content}}"   readonly id="textT0" data-toggle="popover" data-placement="top" data-content="" (click)="popUpTutorial(0)">
+
+                </textarea>
+              
+
+            </div>
+            <div class="card-footer bg-transparent ">{{tutorialArr[0]?.link}}</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border mb-3">
+            <div class="card-header bg-transparent ">{{tutorialArr[1]?.heading}}</div>
+            <div class="card-body text" >
+
+                <textarea maxlength="270" minlength="270" class="input_tutorial" value="{{tutorialArr[1]?.content}}"   readonly id="textT1" data-toggle="popover" data-placement="top" data-content="" (click)="popUpTutorial(1)">
+
+                  </textarea>
+            </div>
+            <div class="card-footer bg-transparent ">{{tutorialArr[1]?.link}}</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border mb-3">
+            <div class="card-header bg-transparent ">{{tutorialArr[2]?.heading}}</div>
+            <div class="card-body text" >
+
+                <textarea maxlength="270" class="input_tutorial" value="{{tutorialArr[2]?.content}}"   readonly id="textT2" data-toggle="popover" data-placement="top" data-content="" (click)="popUpTutorial(2)">
+
+                  </textarea>
+
+            </div>
+            <div class="card-footer bg-transparent ">{{tutorialArr[2]?.link}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

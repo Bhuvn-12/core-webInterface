@@ -1,0 +1,186 @@
+<div class='row'>
+  <div class='col' id='top_head'>
+    <h4>{{selctedObject?.lookup_name}}</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Lookups Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lookupObj of lookupArr; let i = index">
+          <td style="text-align: center">
+            <button class="btn btn-info" type="button" class="btn btn-info"
+              (click)="showDetails(lookupObj)">{{lookupObj?.lookup_name}}</button>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">
+            <button type="submit" class="btn btn-primary" (click)="createLookup()">New Lookup</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-10">
+    <div class="row"
+      *ngIf="selctedObject['lookup_sub_type'] === 'MySQL' || selctedObject['lookup_sub_type'] === 'HBase'">
+      <div class='col' *ngIf="is_formshow">
+        <form [formGroup]="lookupObjectForm">
+          <div class="row" *ngFor='let obj of listArr;let i=index'>
+            <div class="col" *ngFor='let name of listArr[i]'>
+              <div class="form-group">
+                <label>{{name}}</label>
+                <input type="text" formControlName="{{name}}" class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && is_Invalid(name) }" [readonly]="is_disabled" />
+                <div *ngIf="submitted &&  is_Invalid(name)" class="invalid-feedback">
+                  <div *ngIf="is_Invalid(name).required">{{name}} is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="lookup_sub_type == 'MySQL' && is_nextClicked === true && !is_disabled">
+            <div class="col">
+              <label>Key column</label>
+              <select class="custom-select" [formControl]="key_column_ctl"
+                [ngClass]="{ 'is-invalid': submitted2 && key_column_ctl.errors }" required>
+                <option *ngFor="let keyObj of keyValCols " [value]="keyObj">{{keyObj}}</option>
+              </select>
+              <div *ngIf="submitted1 && key_column_ctl.errors" class="invalid-feedback">
+                <div *ngIf="key_column_ctl.errors.required">Key column is required</div>
+              </div>
+            </div>
+            <div class="col">
+              <label>Value column</label>
+              <select class="custom-select" [formControl]="value_column_ctl"
+                [ngClass]="{ 'is-invalid': submitted2 && value_column_ctl.errors }" required>
+                <option *ngFor="let valObj of  keyValCols" [value]="valObj">{{valObj}}</option>
+              </select>
+              <div *ngIf="submitted1 && value_column_ctl.errors" class="invalid-feedback">
+                <div *ngIf="value_column_ctl.errors.required">Value column is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="lookup_sub_type === 'MySQL'">
+            <div class="col" style="text-align: right">
+              <button class="btn btn-info" (click)="getKeyValueCols()"
+                *ngIf="lookup_sub_type == 'MySQL' && !is_nextClicked">Next</button>
+              <button class="btn btn-info" (click)="insertLookUpMysql()"
+                *ngIf="!is_disabled && is_nextClicked">Save</button>
+              <button class="btn btn-info" (click)="editDataMysql()" *ngIf="is_disabled && is_nextClicked">Edit</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-danger" (click)="deleteLookup()" *ngIf="is_disabled">Delete</button>
+            </div>
+          </div>
+          <div class="row" *ngIf="lookup_sub_type === 'HBase'">
+            <div class="col" style="text-align: right">
+              <button class="btn btn-info" (click)="insertLookUpHbase()" *ngIf="!is_disabled ">Save</button>
+              <button class="btn btn-info" (click)="editDataHbase()" *ngIf="is_disabled">Edit</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-danger" (click)="deleteLookup()" *ngIf="is_disabled">Delete</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <ng-container *ngIf="lookup_sub_type == 'MANUAL' ">
+      <div class="row">
+        <div class="col" style="text-align: center">
+          <button class="btn btn-primary" (click)="addKeyValue()">
+            Add New
+          </button>
+        </div>
+      </div>
+      <div class="row" style="border: 1px solid black;margin-bottom: 2px" >
+          <div class="col-5" style="text-align: center">
+            Key 
+          </div>
+          <div class="col-5" style="text-align: center">
+            Value
+          </div>
+          <div class="col-2" style="text-align: center">
+            Action
+          </div>
+        </div>
+      <div class="row" *ngFor="let row of keyValArr;let i=index" style="border: 1px solid black;margin-bottom: 2px">
+        <div class="col-5" style="padding: 0px">
+          <input class="form-control" [(ngModel)]="keyArr[i]">
+        </div>
+        <div class="col-5" style="padding: 0px">
+          <input class="form-control" [(ngModel)]="valArr[i]">
+        </div>
+        <div class="col-2" style="padding: 0px;text-align: center">
+          <button class="btn btn-danger"(click)="deletekeyVal(i)" >Delete</button>
+        </div>
+      </div>
+    </ng-container>
+    <div class="row" *ngIf="lookup_sub_type === 'MANUAL'">
+      <div class="col" style="text-align: right">
+        <button class="btn btn-info" (click)="addEditManual()">Save</button>
+        <!-- <button class="btn btn-info" (click)="updateManual()" *ngIf="is_disabled">Edit</button> -->
+      </div>
+      <div class="col">
+        <button class="btn btn-danger" (click)="deleteLookup()" *ngIf="is_disabled">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Lookup Information -->
+<div class="modal fade" id='lookupObjModal' tabindex="-1" role="dialog" aria-labelledby="lookupObjLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lookupObjModal">Lookup Infromation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class='col'>
+            <form [formGroup]="lookupForm">
+              <div class="row">
+                <div class="col">
+                  <div class="from-group">
+                    <label>Select Subcategory</label>
+                    <select class="custom-select" formControlName="lookup_sub_type"
+                      [ngClass]="{ 'is-invalid': submitted1 && lookup_meta.lookup_sub_type.errors }"
+                      (change)="subSelection($event)">
+                      <option *ngFor="let subObj of lookup_sub_cat " [value]="subObj">{{subObj}}</option>
+                    </select>
+                    <div *ngIf="submitted1 && lookup_meta.lookup_sub_type.errors" class="invalid-feedback">
+                      <div *ngIf="lookup_meta.lookup_sub_type.errors.required">Lookup SubCategory Name is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label>Lookup Name</label>
+                    <input type="text" formControlName="lookup_name" class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted1 && lookup_meta.lookup_name.errors }" />
+                    <div *ngIf="submitted1 && lookup_meta.lookup_name.errors" class="invalid-feedback">
+                      <div *ngIf="lookup_meta.lookup_name.errors.required">Lookup Name is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="saveLookup()">Next</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

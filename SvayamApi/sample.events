@@ -1,0 +1,5 @@
+SELECT lvl4_cd,lvl1_desc, lvl2_desc,lvl3_desc,lvl4_desc,balance from svayam_data.bal_instrument_ledger s left join (select* from svayam_data.ref_chart_of_acc where org_unit_cd='SVM1'  ) ref_chart_of_acc on(s.acct_num=leaf_cd )  where (s.book_cd in ('INGP','IFRS') and s.tgt_curr_cd='INR' and s.tgt_curr_type_cd='FN' and s.acct_dt='2019-07-15' and s.org_unit_cd='SVM1' ) order by lvl4_cd 
+
+SELECT s.arr_num,s.arr_suf ,s.arr_src_cd,arr.active_dt,arr.arr_org_cont_mat_dt,arr.indctry_inst_rate_ex_date,balance from svayam_data.bal_instrument_ledger s left join svayam_data.sal arr on(s.arr_num=arr.arr_num and s.arr_src_cd=arr.arr_src_cd and s.arr_suf=arr.arr_suf and s.org_unit_cd=arr.org_unit_cd ) where (s.book_cd in ('INGP','IFRS') and s.tgt_curr_cd='INR' and s.tgt_curr_type_cd='FN' and s.acct_dt='2019-07-15' and s.acct_num='1211100003' and s.org_unit_cd='SVM1' )
+
+

@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Rule Name" (change)="($event)" [formControl]="ruleSet_Ctl" required>
+        <mat-error *ngIf="ruleSet_Ctl.invalid">
+          please fill Rule Name
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <mat-label>Select Input Data Object</mat-label>
+        <mat-select [formControl]="iDataObj_ctl" (selectionChange)="selectIDataObj($event)" required
+          [attr.disabled]='is_disabled'>
+          <mat-option *ngFor="let obj of iDataObjArr" [value]="obj">{{obj}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="iDataObj_ctl?.invalid">
+          please Select One
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col" style="margin-top: 12px">
+      <button class="btn-primary" (click)='RuleSetObj()'> Save</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <mat-accordion style="width: 100%">
+      <mat-expansion-panel style="width: 100%" *ngFor="let rule of ruleArr;let i=index">
+        <mat-expansion-panel-header class="right-aligned-header">
+          <mat-panel-title>
+            {{rule.ruleName}}
+          </mat-panel-title>
+          <mat-panel-description>
+            <button class="btn" (click)="deleteRule(i)"> <i class="material-icons">
+                remove_circle_outline
+              </i></button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <table class="table">
+          <tr>
+            <td>
+              <div class="row" style="margin: auto">
+                When
+              </div>
+              <div class="row">
+                <a class="badge badge-primary" (click)="editWhen(rule, i)">
+                  See This Condition
+                </a>
+              </div>
+            </td>
+            <td class="createBtn">
+              <button type="button" mat-icon-button color="primary" (click)="callWhen(rule, i)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="row"  style="margin: auto">
+                Then
+              </div>
+              <div class="row" *ngFor="let thenObj of ruleArr[i].then;let thenIndex= index">
+                <a class="badge badge-primary" (click)="editThen(i,thenIndex)">
+                  See This Action
+                </a>
+                <a class="badge " (click)="deletethen(i,thenIndex)"> <i class="material-icons" style="font-size: 11px">
+                    remove_circle_outline
+                  </i></a>
+              </div>
+
+            </td>
+            <td class="createBtn">
+              <button type="button" mat-icon-button color="primary" (click)="callThen(rule, i)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </td>
+          </tr>
+
+        </table>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="row">
+    <div class="col" style="text-align: center">
+        <button class='btn-primary' (click)='saveRuleSet()'>Save Rule</button>
+    </div>
+  </div>
+</div>
+
+<!--When condition Modal -->
+<div class="modal fade" id='whenModal' tabindex="-1" role="dialog" aria-labelledby="whenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Your When Condition</h5>
+      </div>
+      <div class="modal-body">
+        <div style="width: 100%">
+          <mat-card>
+            <app-when-query-builder id='query-builder' [data]='query' [config]='config'>
+            </app-when-query-builder>
+          </mat-card>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="saveWhen()">Save</button>
+        <button type="button" class="btn btn-primary" (click)="closeWhen()" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Then condition Modal -->
+<div class="modal fade" id='thenModal' tabindex="-1" role="dialog" aria-labelledby="thenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="thenModal">Fill then Information</h5>
+      </div>
+      <div class="modal-body">
+        <div style='width:100%'>
+          <mat-form-field>
+            <mat-label>Select Output Object</mat-label>
+            <mat-select [formControl]="outDataObj_ctl" (selectionChange)="selectOutDataObj($event)">
+              <mat-option *ngFor="let obj of outputDataObject" [value]="obj">
+                {{obj}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div style="width: 100%">
+          <mat-card>
+            <app-then-query-builder id='query-builder' [data]='querythen' [config]='configthen'>
+            </app-then-query-builder>
+          </mat-card>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="saveThen()">Save</button>
+        <button type="button" class="btn btn-primary"  (click)="closeThen()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

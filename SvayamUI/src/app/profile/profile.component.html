@@ -1,0 +1,352 @@
+<div class="row">
+  <div class="container">
+    <h4 style="font-size: 25px">Profile</h4>
+    <hr>
+    <div class="row">
+
+      <div class="col-md-3">
+        <div class="text-center">
+          <img [src]="imgURL" class="img-circle" width="150" height="150">
+          <br>
+
+          <h6>Upload a photo...</h6>
+
+          <input #file type="file" name="pimage" ng2FileSelect [uploader]="uploader" class="form-control"
+            style="border-color: black" (change)="onFileUpload($event,file.files)">
+          <br>
+          <button type="button" [disabled]="!uploader.getNotUploadedItems().length" class="btn btn-success"
+            (click)='Upload()'><i class="fa fa-upload" aria-hidden="true">&nbsp;</i>Upload</button>
+        </div>
+      </div>
+
+
+      <div class="col-md-9 personal-info">
+
+        <h3><b style="font-size: 35px">Personal info</b></h3>
+        <br>
+        <br>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Name:</b></label>
+              <div class="col-lg-8">
+                <p> {{jsonObj.f_name}} {{jsonObj.l_name}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Email:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.email}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Phone:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.phone_no}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Designation:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.designation}}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Country:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.country}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>State:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.state}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Postal Code:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.postal_code}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Address1:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.address1}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Address2:</b></label>
+              <div class="col-lg-8">
+                <p>{{jsonObj.address2}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <button id="save" data-toggle="modal" data-target="#modelId">Change Password</button>
+              <button id="cancel" data-toggle="modal" data-target="#modelId1">Change Info</button>
+              
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="modelId">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border:double 2px black; box-shadow: 5px 5px  #1d2753;">
+      <div class="modal-header" style="background-color: lightblue;  ">
+        <h5 class="modal-title"><b>Change Password</b></h5>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="profileGroup">
+          <form class="form-horizontal" [formGroup]="profileGroup">
+            <div class="form-group">
+              <div class="row">
+                <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Old Password:</b></label>
+                <div class="col-lg-8">
+                  <input type="password" formControlName="oldPassword" class="form-control" placeholder=" Old password"
+                    [ngClass]="{ 'is-invalid': submitted && f.oldPassword.errors }" required />
+                </div>
+              </div>
+              <div *ngIf="submitted && f.oldPassword.errors" class="invalid-feedback">
+                <div *ngIf="f.oldPassword.errors.required">Old Password is required</div>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>New Password:</b></label>
+                <div class="col-lg-8">
+                  <input type="password" formControlName="password" class="form-control" placeholder="New password"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required />
+                </div>
+              </div>
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Password is required</div>
+                <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <label class="col-lg-3 control-label" style="font-size: 15px ;"><b>Confirm Password:</b></label>
+                <div class="col-lg-8">
+                  <input type="password" formControlName="confirmPassword" placeholder="Confirm password"
+                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" required />
+
+                </div>
+
+              </div>
+              <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+              </div>
+              <div *ngIf="submitted && passwdmatch " class="invalid-feedback" style="display: block">
+                <div> Password not match</div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightblue">
+        <button type="button" class="btn btn-info" (click)='onSubmit()'>Save</button>
+        <button routerLink="/profile" data-dismiss="modal" type="button" class="btn btn-danger">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modelId1">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border:double 2px black ; box-shadow: 5px 5px  #1d2753; ">
+      <div class="modal-header" style="background-color: lightblue">
+        <h4 class="modal-title"><b>Edit Profile</b></h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <!-- edit form column -->
+            <div class="col-md-9 personal-info">
+              <div *ngIf="editGroup">
+                <form class="form-horizontal" [formGroup]="editGroup">
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>First Name:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="fname" class="form-control"
+                          placeholder="Enter Your firstName" [ngClass]="{ 'is-invalid': submit && P.fname.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.fname.errors" class="invalid-feedback">
+                      <div *ngIf="P.fname.errors.required">First Name is required</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Last Name:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="lname" class="form-control"
+                          placeholder="Enter Your Last Name" [ngClass]="{ 'is-invalid': submit && P.lname.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.lname.errors" class="invalid-feedback">
+                      <div *ngIf="P.lname.errors.required">Last Name is required</div>
+
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Email:</b></label>
+                      <div class="col-lg-8">
+                        <input type="email" formControlName="email" class="form-control" placeholder="Enter New Email"
+                          [ngClass]="{ 'is-invalid': submit && P.email.errors }" required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.email.errors" class="invalid-feedback">
+                      <div *ngIf="P.email.errors.required">Email is required</div>
+                      <div *ngIf="P.email.errors.email">Invalid Email Id</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Phone:</b></label>
+                      <div class="col-lg-8">
+                        <input type="number" formControlName="phone" class="form-control"
+                          placeholder="Enter New Phone Number" [ngClass]="{ 'is-invalid': submit && P.email.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.email.errors" class="invalid-feedback">
+                      <div *ngIf="P.phone.errors.required">Phone Number is required</div>
+                      <div *ngIf="P.phone.errors.phone">Invalid Phone Number</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Desgination:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="des" class="form-control"
+                          placeholder="Enter Your Desgination" [ngClass]="{ 'is-invalid': submit && P.des.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.des.errors" class="invalid-feedback">
+                      <div *ngIf="P.des.errors.required">Desgination is required</div>
+
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Address 1:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="add1" class="form-control"
+                          placeholder="Enter Your Address 1" [ngClass]="{ 'is-invalid': submit && P.add1.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.add1.errors" class="invalid-feedback">
+                      <div *ngIf="P.add1.errors.required">Address1 is required</div>
+
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Address 2:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="add2" class="form-control"
+                          placeholder="Enter Your Address 2" [ngClass]="{ 'is-invalid': submit && P.add2.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.add2.errors" class="invalid-feedback">
+                      <div *ngIf="P.add2.errors.required">Address2 is required</div>
+
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Country:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="country" class="form-control"
+                          placeholder="Enter Your Country" [ngClass]="{ 'is-invalid': submit && P.country.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.country.errors" class="invalid-feedback">
+                      <div *ngIf="P.country.errors.required">Country is required</div>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>State:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="state" class="form-control" placeholder="Enter Your State"
+                          [ngClass]="{ 'is-invalid': submit && P.state.errors }" required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.state.errors" class="invalid-feedback">
+                      <div *ngIf="P.state.errors.required"> State is required</div>
+
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label class="col-lg-4 control-label" style="font-size: 15px ;"><b>Postal Code:</b></label>
+                      <div class="col-lg-8">
+                        <input type="text" formControlName="code" class="form-control"
+                          placeholder="Enter Your Postal Code" [ngClass]="{ 'is-invalid': submit && P.code.errors }"
+                          required />
+                      </div>
+                    </div>
+                    <div *ngIf="submit && P.code.errors" class="invalid-feedback">
+                      <div *ngIf="P.code.errors.required">Postal Code is required</div>
+
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightblue">
+        <button type="button" class="btn btn-info" (click)='Save()'>Save</button>
+        <button routerLink="/profile" data-dismiss="modal" type="button" class="btn btn-danger">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

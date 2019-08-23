@@ -1,0 +1,22 @@
+#top_head {
+    text-align: center;
+    border: 1px solid black;
+    margin:5px;
+}
+input[type="text"]:disabled {
+    background: #ffffff;
+  }
+.custom-select:disabled {
+    background: #ffffff;
+}
+th{
+    text-align: center;
+}
+
+.btn1{
+    color: #fff;
+    background-color: #23B7E5;
+    border: 0px;
+    min-width: 125px;
+    max-width: 125px;
+}

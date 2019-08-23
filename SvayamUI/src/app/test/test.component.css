@@ -1,0 +1,16 @@
+table {
+    width: 100%;
+  }
+div.mat-expansion-panel-body {
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  } 
+ th{
+   text-align: center;
+ }
+ .level1{
+   padding-left:10px;
+ }
+  

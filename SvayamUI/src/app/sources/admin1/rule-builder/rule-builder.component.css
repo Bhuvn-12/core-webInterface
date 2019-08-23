@@ -1,0 +1,40 @@
+.right-aligned-header>.mat-content {
+  justify-content: space-between;
+}
+
+.mat-content>.mat-panel-title,
+.mat-content>mat-panel-description {
+  flex: 0 0 auto;
+}
+
+.createBtn {
+  text-align: right
+}
+
+.modal-dialog {
+  min-width: 70%;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.container {
+  margin-top: 5px;
+  border: 1px solid black;
+  width: 100%
+}
+
+.col {
+  text-align: center
+}
+
+.row {
+  margin-top: 5px;
+}

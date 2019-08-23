@@ -1,0 +1,108 @@
+
+/*
+
+var org_cd='$##$svayam$##$'
+
+
+rule issue_cc_involve_party {
+    when {
+        eventRecord :Object eventRecord.event=='Issue';
+        involveParty:Array;
+        ss:String ss=='involve_party'
+    }
+    then {
+   //create InvolveParty
+    console.log(eventRecord.ip_rec_id);
+   involveParty[0]=eventRecord.ip_rec_id;
+    involveParty[1]=eventRecord.eff_date;
+    involveParty[2]=eventRecord.src_trace_key;
+    involveParty[3]=eventRecord.org_unit_cd;
+    involveParty[4]=eventRecord.ip_name;
+    involveParty[5]=eventRecord.ip_city_name;
+    involveParty[6]=eventRecord.ip_country;
+    involveParty[7]=eventRecord.zip_cd;
+    involveParty[8]=eventRecord.ip_residence_cd;
+    involveParty[9]=eventRecord.ip_cust_type_cd;
+    involveParty[10]=eventRecord.ip_dtl_cust_type_cd;
+    involveParty[11]=eventRecord.occupation;
+
+    }
+}
+
+rule issue_cc_arrangement {
+    when {
+        eventRecord :Object eventRecord.event=='Issue';
+        arrangement:Array;
+        arrFld:Object arrFld.id=='arg';
+    }
+    then {
+   //create arrangement Field
+    arrangement[0]=arrFld.arr_id;
+    arrangement[1]=arrFld.arr_src_cd;
+    arrangement[2]=arrFld.arr_num;
+    arrangement[3]=arrFld.arr_suf;
+    arrangement[4]=arrFld.arr_ext_cd;
+    arrangement[5]=eventRecord.eff_date;
+    arrangement[8]=eventRecord.src_trace_key;
+    arrangement[9]=eventRecord.org_unit_cd;
+    arrangement[19]=eventRecord.dtl_prod_cd;
+    arrangement[148]=eventRecord.prod_cd;
+    }
+}
+
+rule credit_card_expense{
+    when {
+        eventRecord :Object eventRecord.event=='Credit Care Expense';
+        txn_extra_data:Object txn_extra_data.id=='txn';
+          credit_card_expense:Array;
+    }
+    then {
+   //create sje Field
+    credit_card_expense[0]=eventRecord.arr_src_cd;
+    credit_card_expense[1]=eventRecord.arr_num;
+    credit_card_expense[2]=eventRecord.arr_suf;
+    credit_card_expense[3]=eventRecord.org_unit_cd;
+    credit_card_expense[4]=eventRecord.prod_cd;
+    credit_card_expense[5]='';//ldgr_src_cd not yet generated
+    credit_card_expense[6]=txn_extra_data.file_cd;
+    credit_card_expense[7]=eventRecord.prod_cd.substring(0,3);
+    credit_card_expense[8]='FIN';
+    credit_card_expense[9]='ARE';
+    credit_card_expense[10]='Y';
+    credit_card_expense[11]='N';
+    credit_card_expense[12]='RA';
+    credit_card_expense[13]='P';
+    credit_card_expense[14]=eventRecord.prod_cd;
+    if(txn_extra_data.jrnl_line_id%5==0){
+    credit_card_expense[15]=eventRecord.org_unit_cd;
+    }
+    credit_card_expense[16]=eventRecord.cust_industry_cd;
+    credit_card_expense[17]=eventRecord.dtl_prod_cd;
+    credit_card_expense[18]=eventRecord.dtl_cust_industry_cd;
+    credit_card_expense[19]='';//cust_grouping_cd not yet generated
+    credit_card_expense[20]=eventRecord.gaap_cd;
+    credit_card_expense[21]='ACTUAL';
+    credit_card_expense[24]=txn_extra_data.txn_chnl_cd;
+    credit_card_expense[27]=eventRecord.prod_event_cd;
+    credit_card_expense[28]=eventRecord.tgt_curr_cd;
+    credit_card_expense[29]='TX';
+     credit_card_expense[30]=eventRecord.tgt_curr_cd;
+    credit_card_expense[31]='TX';
+    credit_card_expense[32]=txn_extra_data.ppd_date.getFullYear(); //32 fiscal year
+    credit_card_expense[33]=txn_extra_data.ppd_date.getMonth();//
+    credit_card_expense[34]=txn_extra_data.ppd_date.getDate();
+    credit_card_expense[35]=txn_extra_data.acct_dt;
+    credit_card_expense[36]=txn_extra_data.acct_dt;
+    credit_card_expense[37]=txn_extra_data.curr_date_string;
+    credit_card_expense[38]=txn_extra_data.curr_date_string;
+    credit_card_expense[40]='MVT';
+    credit_card_expense[44]='Source System Journal';
+    credit_card_expense[46]=txn_extra_data.jrnl_line_id;
+    credit_card_expense[47]='';
+    credit_card_expense[48]='';
+    credit_card_expense[51]=txn_extra_data.jrnl_line_id;
+    credit_card_expense[52]='FNC';
+    credit_card_expense[54]='ACC';
+    }
+}
+*/

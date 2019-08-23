@@ -1,0 +1,1 @@
+{"src_trace_key":"SVYAM","arr_num":"3","arr_suf":"S2","amount":"30","cust_industry_cd":"C10000","dtl_cust_industry_cd":"10000","arr_src_cd":"IN","tgt_curr_cd":"INR","event_name":"Make Payment","org_unit_cd":"S1","prod_cd":"510101000","dtl_prod_cd":"510101020","date":"2019-06-08","is_automated":"false"}

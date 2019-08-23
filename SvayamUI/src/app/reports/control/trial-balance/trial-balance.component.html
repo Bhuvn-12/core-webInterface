@@ -1,0 +1,213 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <mat-form-field class="example-full-width">
+                <mat-label>Gaap</mat-label>
+                <mat-select  multiple  [formControl]="gaapctl" (selectionChange)="selectGaap($event)">
+                  <mat-option *ngFor="let obj of gaapArray" [value]="obj">{{obj}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-form-field class="example-full-width">
+                <mat-label>Currency Type</mat-label>
+                <mat-select [formControl]="currtypectl" (selectionChange)="selectcurrType($event)" >
+                    <mat-option *ngFor="let obj of currTypeArray" [value]="obj">
+                        {{obj}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-form-field class="example-full-width">
+                <mat-label>Currency Code</mat-label>
+                <mat-select  [formControl]="currcodectl" (selectionChange)="selectcurrCode($event)">
+                    <mat-option *ngFor="let obj of currCodeArray" [value]="obj">
+                        {{obj}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+       
+            <div class="col">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Processing Date</mat-label>
+                <mat-select  [formControl]="ppdctl" (selectionChange)="selectproDate($event)">
+                    <mat-option *ngFor="let obj of ppdArray" [value]="obj">
+                        {{obj}}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field class="example-full-width">
+                    <input type="date" matInput placeholder="accounting Date" (change)="selectacctDate($event)" [formControl]="acct_dt_ctl">
+                </mat-form-field>
+            </div>
+            <div class="col" >
+                    <button class="btn btn-primary" (click)="refreshData()">Submit</button>
+            </div>
+    </div>
+
+</div>
+
+    <table class="table">
+        <tbody>
+            <tr *ngIf="show_arr_btn || show_jrnl_btn">
+                <td style="padding: 5px;text-align :center;align-content: center">
+                    <button type="button" class="btn btn-link" (click)="gotoArr() " *ngIf="show_arr_btn">
+                        Arrangement Drill-Down
+                    </button>
+                </td>
+                <td style="padding: 5px;text-align :center;align-content: center">
+                    <button type="button" class="btn btn-link" (click)="gotoJrnl() " *ngIf="show_jrnl_btn">
+                        Journal Listing
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+</table>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Account Hierarchy</th>
+        <th>Chart Of Account</th>
+        <th>Balance</th>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <mat-expansion-panel>
+                <mat-expansion-panel-header class="right-aligned-header">
+                    <mat-panel-title>
+                        Trial Balance
+                    </mat-panel-title>
+                    <mat-panel-description>
+                       {{Currency_symbol}} &nbsp;&nbsp; {{totalOfTrialbal.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header  class="right-aligned-header1" style="padding-left: 40px">
+                        <mat-panel-title>
+                            BalanceSheet
+                        </mat-panel-title>
+                        <mat-panel-description>
+                                {{Currency_symbol}} &nbsp;&nbsp; {{totalOfBalSheet.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                        </mat-panel-description>
+
+                    </mat-expansion-panel-header>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header  class="right-aligned-header2" style="padding-left: 50px">
+                            <mat-panel-title>
+                                Assets
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                    {{Currency_symbol}} &nbsp;&nbsp;  {{totalOfAssets.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="mytable ">
+                            <tr *ngFor="let Obj of assetArr">
+                                <td></td>
+                                <td>{{Obj.lvl4_desc}}</td>
+                                <td class="number" style="padding-right: 47px"> {{Currency_symbol}} &nbsp;&nbsp; <a (click)="rowClicked(Obj)" style="text-decoration: underline;
+                                    color: #337ab7;"> {{Obj.balance.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}</a></td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header  class="right-aligned-header2" style="padding-left: 50px">
+                            <mat-panel-title>
+                                Liability
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                    {{Currency_symbol}} &nbsp;&nbsp;  {{totalOfLiability.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="mytable ">
+                            <tr *ngFor="let Obj of liabilityArr">
+                                <td></td>
+                                <td>{{Obj.lvl4_desc}}</td>
+                                <td class="number" style="padding-right: 47px"> {{Currency_symbol}} &nbsp;&nbsp; <a (click)="rowClicked(Obj)" style="text-decoration: underline;
+                                    color: #337ab7;"> {{Obj.balance.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}</a></td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header  class="right-aligned-header2" style="padding-left: 50px">
+                            <mat-panel-title>
+                                Equity
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                    {{Currency_symbol}} &nbsp;&nbsp; {{totalOfEquity.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="mytable ">
+                            <tr *ngFor="let Obj of equityArr">
+                                <td></td>
+                                <td>{{Obj.lvl4_desc}}</td>
+                                <td class="number" style="padding-right: 47px"> {{Currency_symbol}} &nbsp;&nbsp; <a (click)="rowClicked(Obj)" style="text-decoration: underline;
+                                    color: #337ab7;"> {{Obj.balance.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}</a></td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                </mat-expansion-panel>
+
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header  class="right-aligned-header1" style="padding-left: 40px">
+                        <mat-panel-title>
+                            Income Statements
+                        </mat-panel-title>
+                        <mat-panel-description>
+                                {{Currency_symbol}} &nbsp;&nbsp; {{totalOfIncomestmt.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header  class="right-aligned-header2" style="padding-left: 50px">
+                            <mat-panel-title>
+                                Income
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                    {{Currency_symbol}} &nbsp;&nbsp;   {{totalOfIncome.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="mytable">
+                            <tr *ngFor="let Obj of incomeArr">
+                                <td ></td>
+                                <td>{{Obj.lvl4_desc}}</td>
+                                <td class="number" style="padding-right: 47px">
+                                        {{Currency_symbol}} &nbsp;&nbsp; <a (click)="rowClicked(Obj)" style="text-decoration: underline;
+                                        color: #337ab7;">{{Obj.balance.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}</a></td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header  class="right-aligned-header2" style="padding-left: 50px">
+                            <mat-panel-title>
+                                Expense
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                    {{Currency_symbol}} &nbsp;&nbsp;   {{totalOfExpense.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <table class="mytable ">
+                            <tr *ngFor="let Obj of expenseArr">
+                                <td></td>
+                                <td>{{Obj.lvl4_desc}}</td>
+                                <td class="number" style="padding-right: 47px">
+                                        {{Currency_symbol}} &nbsp;&nbsp; <a (click)="rowClicked(Obj)" style="text-decoration: underline;
+                                        color: #337ab7;">
+                                        {{Obj.balance.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}</a></td>
+                            </tr>
+                        </table>
+                    </mat-expansion-panel>
+
+                </mat-expansion-panel>
+
+            </mat-expansion-panel>
+        </td>
+    </tr>
+</table>
+<ngx-spinner type="pacman"></ngx-spinner>

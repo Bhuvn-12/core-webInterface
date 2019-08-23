@@ -1,0 +1,170 @@
+
+<div class="container">
+  <div class="row">
+      <div class="col">
+          <mat-form-field class="example-full-width">
+              <mat-label>Gaap</mat-label>
+              <mat-select  multiple  [formControl]="gaapctl" (selectionChange)="selectGaap($event)">
+                <mat-option *ngFor="let obj of gaapArray" [value]="obj">{{obj}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+      <div class="col">
+          <mat-form-field class="example-full-width">
+              <mat-label>Currency Type</mat-label>
+              <mat-select [formControl]="currtypectl" (selectionChange)="selectcurrType($event)" >
+                  <mat-option *ngFor="let obj of currTypeArray" [value]="obj">
+                      {{obj}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+      <div class="col">
+          <mat-form-field class="example-full-width">
+              <mat-label>Currency Code</mat-label>
+              <mat-select  [formControl]="currcodectl" (selectionChange)="selectcurrCode($event)">
+                  <mat-option *ngFor="let obj of currCodeArray" [value]="obj">
+                      {{obj}}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+  </div>
+  <div class="row">
+     
+          <div class="col">
+              <mat-form-field class="example-full-width">
+                  <mat-label>Processing Date</mat-label>
+              <mat-select  [formControl]="ppdctl" (selectionChange)="selectproDate($event)">
+                  <mat-option *ngFor="let obj of ppdArray" [value]="obj">
+                      {{obj}}
+                  </mat-option>
+              </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="col">
+              <mat-form-field class="example-full-width">
+                  <input type="date" matInput placeholder="accounting Date" (change)="selectacctDate($event)" [formControl]="acct_dt_ctl">
+              </mat-form-field>
+          </div>
+          <div class="col" >
+                  <button class="btn btn-primary" (click)="refreshData()">Submit</button>
+          </div>
+  </div>
+
+</div>
+
+  <table class="table">
+      <tbody>
+          <tr *ngIf="show_arr_btn || show_jrnl_btn">
+              <td style="padding: 5px;text-align :center;align-content: center">
+                  <button type="button" class="btn btn-link" (click)="gotoArr() " *ngIf="show_arr_btn">
+                      Arrangement Drill-Down
+                  </button>
+              </td>
+              <td style="padding: 5px;text-align :center;align-content: center">
+                  <button type="button" class="btn btn-link" (click)="gotoJrnl() " *ngIf="show_jrnl_btn">
+                      Journal Listing
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+</table>
+
+<table class="table table-bordered">
+  <tr>
+      <th>Rwa Category</th>
+      <th></th>
+      <th>Total Amount</th>
+  </tr>
+  <tr>
+      <td colspan="3">
+          <mat-expansion-panel>
+              <mat-expansion-panel-header class="right-aligned-header">
+                  <mat-panel-title>
+
+                      Liquidity Ratio
+                  </mat-panel-title>
+                  <mat-panel-description>
+                      {{percentage.toFixed(2)}} %
+                  </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header  class="right-aligned-header1" style="padding-left: 40px">
+                      <mat-panel-title>
+                          Capital
+                      </mat-panel-title>
+                      <mat-panel-description>
+                          {{Currency_symbol}} &nbsp;&nbsp; {{totalOfCapital.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                      </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <table class="mytable ">
+                      <tr *ngFor="let Obj of capitalArr">
+                          <td style="padding-left: 60px">{{Obj.lr_sub_cat}}</td>
+                          <td>{{Obj.lr_exposure_type}}</td>
+                          <td class="number" style="padding-right: 47px">  {{Currency_symbol}} &nbsp;&nbsp; <a (click)="rowClicked(Obj)" style="text-decoration: underline;
+                            color: #337ab7;">{{Obj.balance.toLocaleString(undefined, {'minimumFractionDigits':2,'maximumFractionDigits':2})}}</a></td>
+                      </tr>
+                  </table>
+
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                  <mat-expansion-panel-header  class="right-aligned-header1" style="padding-left: 40px">
+                      <mat-panel-title>
+                          Risk Weighted Assets
+                      </mat-panel-title>
+                      <mat-panel-description>
+                            {{Currency_symbol}} &nbsp;&nbsp; {{totalOfRwa.toLocaleString(undefined,{'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                      </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <table class="mytable ">
+                      <tr>
+                          <td></td>
+                          <td style="padding :0px">
+                              <table class="mytable">
+                                  <tr>
+                                      <td style="text-align: center;border-left: 0px"> <b>Asset Amt </b>
+                                      </td>
+                                      <td
+                                          style="text-align: center;border-left: 1px solid white">
+                                          <b>Risk Weight</b>
+                                        </td>
+                                        <td
+                                          style="text-align: center;border-left: 1px solid white">
+                                          <b>Crcv Factor</b>
+                                        </td>
+                                  </tr>
+                              </table>
+                          </td>
+                          <td></td>
+                      </tr>
+                      <tr *ngFor="let Obj of rwaArr">
+                          <td style="padding-left: 60px">{{Obj.lr_exposure_type}}</td>
+                          <td  style="padding :0px">
+                              <table class="mytable" >
+                                  <tr>
+                                      <td
+                                          style="border-left: 0px;text-align: right;padding-right: 5px">
+                                          {{Obj.balance.toLocaleString(undefined, {'minimumFractionDigits':2,'maximumFractionDigits':2})}}</td>
+                                      <td style="text-align: right;padding-right: 5px">
+                                          {{Obj.risk_weight.toLocaleString(undefined, {'minimumFractionDigits':2,'maximumFractionDigits':2})}}</td>
+                                          <td style="text-align: right;padding-right: 5px">
+                                            {{Obj.credit_conversion_factor.toLocaleString(undefined, {'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+                                           </td>
+                                  </tr>
+                              </table>
+                          </td>
+                          <td class="number" style="padding-right: 47px"> {{Currency_symbol}} &nbsp;&nbsp; <a (click)="rowClicked(Obj)" style="text-decoration: underline;
+                            color: #337ab7;">{{(Obj.balance * Obj.risk_weight * Obj.credit_conversion_factor).toLocaleString(undefined, {'minimumFractionDigits':2,'maximumFractionDigits':2})}}</a></td>
+                      </tr>
+                  </table>
+
+              </mat-expansion-panel>
+
+
+          </mat-expansion-panel>
+      </td>
+  </tr>
+</table>
+<ngx-spinner  type="pacman"></ngx-spinner>

@@ -1,0 +1,305 @@
+<div class="instruction" style="width: 90;height: 100;border: black solid 1.5px;margin: 15px">
+  <p style="margin-left: 8px"><b> In the section you can delete and modify exsisting source
+      systems or add new source system</b> </p>
+  <p style="margin-left: 8px"><b> Stop Source System Before Deleting It</b> </p>
+</div>
+<div class="instruction" style="border: black solid 1px;margin: 15px">
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="ss_name">
+      <th mat-header-cell *matHeaderCellDef>Source System </th>
+      <td mat-cell *matCellDef="let element"> {{element.ss_name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> DELETE </th>
+      <td mat-cell *matCellDef="let element;let i=index"> <button type="button" style="background-color: #FF0000"
+          class="btn btn-danger" (click)="deleteSource(element,i)">
+          DELETE</button> </td>
+    </ng-container>
+    <ng-container matColumnDef="modify">
+      <th mat-header-cell *matHeaderCellDef> MODIFY </th>
+      <td mat-cell *matCellDef="let element"> <button type="button" style="background-color: #3366FF"
+          class="btn btn-primary" (click)="routermodifySource(element)">MODIFY</button> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+
+<div class="center">
+  <button type="button" style="background-color: #3366FF" class="btn btn-primary" (click)="openModal('add')">Add
+    New</button>
+</div>
+
+
+
+<!-- Source System Setup Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Setup Source System</h5>
+<!--          <button type="button"  (click)="stepper.reset()" data-dismiss="modal" style="background: transparent;border: 0px">
+          <i class="far fa-times-circle" ></i>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        <mat-horizontal-stepper [linear]="isLinear" #stepper>
+          <mat-step>
+              <ng-template matStepLabel>Fill Source System Name</ng-template>
+              <div class="row">
+                <div class="col-10">
+                    <input class="form-control" type='text' [(ngModel)]="ss_name" required >
+                </div>
+                <div class="col-2" style="text-align: right">
+                    <button class="btn btn-info"  (click)="addSource()">Save</button>
+                </div>
+              </div>
+            <div class="row" style="margin-top: 5px">
+              <div class="col" style="text-align: left">
+                  <button class="btn btn-primary"  (click)="gotoProduct(stepper)" *ngIf="is_show">Next</button>
+              </div>
+              <div class="col" style="text-align: right">
+                  <button class="btn btn-primary" (click)="resetStepper(stepper)">Close</button>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step>
+              <ng-template matStepLabel>Fill Product Details</ng-template>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>PROD CD</th>
+                    <th>PROD DESC</th>
+                    <th>DTL PROD CD</th>
+                    <th>DTL PROD DESC</th>
+                    <th>OFF BAL</th>
+                    <th>CR CONV FAC</th>
+                    <th colspan="2"> Actions</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of prodList; let i = index">
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="row.prod_cd" [disabled]="row.is_disabled"
+                        required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="row.prod_desc" [disabled]="row.is_disabled"
+                        required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="row.dtl_prod_cd" [disabled]="row.is_disabled"
+                        required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="row.dtl_prod_desc"
+                        [disabled]="row.is_disabled" required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="row.off_balance_sheet_exposure_type"
+                        [disabled]="row.is_disabled" required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="row.credit_conversion_factor"
+                        [disabled]="row.is_disabled" required />
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-info" (click)="makeEditableProd(i,row)"
+                        *ngIf="row.is_disabled">Edit</button>
+                      <button type="button" class="btn btn-primary" (click)="updateProd(i,row)"
+                        *ngIf="!row.is_disabled">Save</button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger" (click)="deleteProd(i,row)">Delete</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="showNew">
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="new_product.prod_cd"
+                        [disabled]="new_product.is_disabled" required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="new_product.prod_desc"
+                        [disabled]="new_product.is_disabled" required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="new_product.dtl_prod_cd"
+                        [disabled]="new_product.is_disabled" required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="new_product.dtl_prod_desc"
+                        [disabled]="new_product.is_disabled" required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="new_product.off_balance_sheet_exposure_type"
+                        [disabled]="new_product.is_disabled" required />
+                    </td>
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="new_product.credit_conversion_factor"
+                        [disabled]="new_product.is_disabled" required />
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary" (click)="addProduct(new_product)">Save</button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger"
+                        (click)="deleteNewProd(i,new_product)">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="col-12" style="text-align: center">
+                <button class="btn btn-primary" (click)="newProduct()">New Product</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col" style="text-align: left">
+                  <button class="btn btn-info" matStepperPrevious>Back</button> &nbsp;&nbsp;
+                  <button class="btn btn-primary" (click)= "gotoEvents(stepper)">Next</button>
+              </div>
+              <div class="col" style="text-align: right">
+                  <button class="btn btn-primary" (click)="resetStepper(stepper)">Close</button>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step>
+              <ng-template matStepLabel>Fill Event Details</ng-template>
+            <div  class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>EVENT NAME</th>
+                    <th>INPUT EVENT</th>
+                    <th>PRODUCT NAME</th>
+                    <th>Rule</th>
+                    <th colspan="2"> Actions</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of eventList; let i = index">
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="row.ev_name" [disabled]="row.is_disabled"
+                        required />
+                    </td>
+                    <td>
+                      <select class="custom-select" [(ngModel)]="row.screen_to_project" [disabled]="row.is_disabled">
+                        <option value="ip">Arrangement</option>
+                        <option value="arr">Sje</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select class="custom-select" [(ngModel)]="row.prod_id" [disabled]="row.is_disabled">
+                        <option *ngFor="let prodObj of prodList" value="{{prodObj.prod_id}}">{{prodObj.dtl_prod_desc}}
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-info" (click)="ruleRoute(i,row)">Rule</button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-info" (click)="makeEditableEvent(i,row)"
+                        *ngIf="row.is_disabled">Edit</button>
+                      <button type="button" class="btn btn-primary" (click)="updateEvent(i,row)"
+                        *ngIf="!row.is_disabled">Save</button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger" (click)="deleteEvent(i,row)">Delete</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="showNewEvent">
+                    <td>
+                      <input class="form-control" type='text' [(ngModel)]="new_event.ev_name"
+                        [disabled]="new_event.is_disabled" required />
+                    </td>
+                    <td>
+                      <select class="custom-select" [(ngModel)]="new_event.screen_to_project"
+                        [disabled]="new_event.is_disabled">
+                        <option value="ip">Arrangement</option>
+                        <option value="arr">Sje</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select class="custom-select" [(ngModel)]="new_event.prod_id" [disabled]="new_event.is_disabled">
+                        <option *ngFor="let prodObj of prodList" value="{{prodObj.prod_id}}">{{prodObj.dtl_prod_desc}}
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-info" disabled>Rule</button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary" (click)="addEvent(new_event)">Save</button>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger" (click)="deleteNewEvent(i,new_event)">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+<!--               <div class="col-12" style="text-align: center">
+               
+               
+              
+              </div> -->
+              <div class="row">
+                <div class="col" style="text-align: center">
+                  <button class="btn btn-primary" (click)="newEvent()">New Event</button>
+                </div>
+                <div class="col" style="text-align: center">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Select Product</mat-label>
+                    <mat-select [formControl]="eventCtl" (selectionChange)="selectproduct($event)" >
+                        <mat-option *ngFor="let obj of ext_prod_arr" [value]="obj">
+                            {{obj.dtl_prod_desc}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                </div>
+                <div class="col" style="text-align: center">
+                  <button class="btn btn-primary" (click)="copyEventList()">Copy Event</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col" style="text-align: left">
+                  <button class="btn btn-info" matStepperPrevious>Back</button>
+              </div>
+              <div class="col" style="text-align: right">
+                  <button class="btn btn-primary" (click)="resetStepper(stepper)">Close</button>
+                </div>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div> 
+    </div>
+  </div>
+</div>
+
+
+<!-- Source System Setup Modal -->
+<div class="modal fade" id="AddRuleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-scrollable" role="document" style="width: 90%">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Rule Systems</h5>
+        <button type="button" aria-label="Close" data-dismiss="modal">
+          <i class="far fa-times-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-rule-builder *ngIf="loadRuleBuilder"></app-rule-builder>
+      </div> 
+    </div>
+  </div>
+</div>
+
+
+<ngx-spinner type="pacman"></ngx-spinner>

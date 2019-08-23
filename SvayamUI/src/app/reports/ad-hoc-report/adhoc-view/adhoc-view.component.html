@@ -1,0 +1,94 @@
+
+<div class="row" style="margin-top: 10px;margin-bottom: 10px">
+  <div class="col">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Select Tables
+        </mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-8" style="border: 1px solid black">
+          <div style="width:100%">
+            <div class="list-container">
+              <h4>Tables</h4>
+              <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="table" [cdkDropListConnectedTo]="[doneList]"
+                class="list" (cdkDropListDropped)="dragDrop($event)">
+                <div class="list-box" *ngFor="let item of table" cdkDrag>{{item}}</div>
+              </div>
+            </div>
+            <div class="list-container">
+              <h4>Selected Tables</h4>
+              <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="selectedTables"
+                [cdkDropListConnectedTo]="[todoList]" class="list" (cdkDropListDropped)="dragDrop($event)">
+                <div class="list-box" *ngFor="let item of selectedTables" cdkDrag>{{item}}</div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row" style="margin-bottom: 10px">
+            <div class="col" style="text-align: center">
+              <button class="btn btn-primary" (click)="setColumns()">Get Columns</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-4" style="border: 1px solid black">
+          <mat-form-field style="width: 100%">
+            <mat-select (openedChange)="openedChange($event)" placeholder="Select" [formControl]="selectFormControl"
+              multiple>
+              <mat-select-trigger>
+                {{selectFormControl.value ? selectFormControl.value[0] : ''}}
+                <span *ngIf="selectFormControl.value?.length > 1" class="additional-selection">
+                  (+{{selectFormControl.value.length - 1}}
+                  {{selectFormControl.value?.length === 2 ? 'other' : 'others'}})
+                </span>
+              </mat-select-trigger>
+               <mat-form-field style="width: 100%">
+                <input #search autocomplete="off" placeholder="Search" aria-label="Search" matInput
+                  [formControl]="searchTextboxControl">
+                <button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="clearSearch($event)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <div class="select-container">
+                <mat-optgroup *ngIf="(filteredOptions | async).length == 0">
+                  <div>No results found!</div>
+                </mat-optgroup>
+                <mat-option (onSelectionChange)="selectionChange($event)"
+                  *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </div>
+            </mat-select>
+          </mat-form-field>
+          <br>
+          <div class="row">
+            <div class="col" style="text-align: center">
+              <button class="btn btn-primary" (click)="getData()"> Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+</div>
+<div class="row" style="margin-bottom: 15px">
+  <div class="col" style="text-align: center">
+    <button class="btn btn-primary" (click)="getfileData()">Get Data</button> &nbsp; &nbsp;
+    <button class="btn btn-info" (click)="saveReport()">Save Report</button>
+  </div>
+</div>
+<wbr-pivot #pivot1 [toolbar]="true"
+          [width]="'100%'"
+          [height]="500"
+          [customizeCell]="onCustomizeCell"
+          (ready)="onPivotReady($event)"
+          (beforetoolbarcreated)="customizeToolbar($event)"
+          (reportcomplete)="onReportComplete()">
+</wbr-pivot>
+<ngx-spinner type="pacman"></ngx-spinner>
+

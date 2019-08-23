@@ -1,0 +1,22 @@
+.example-container {
+    height: 520px;
+    overflow: auto;
+    margin-left:10px ;
+    margin-right:10px; 
+  }
+  
+  table {
+    width: 100%;
+  }
+
+.mat-header-cell{
+  font-weight: bold;
+  font-size: 14px;
+  background-color: black;
+  color:white;
+  padding: 2px;
+  border: solid .5px black;
+}
+.btn-edit{
+    color: navy;
+}

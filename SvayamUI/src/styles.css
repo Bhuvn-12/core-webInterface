@@ -1,0 +1,6 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.cdk-global-overlay-wrapper, .cdk-overlay-container,.cdk-drag-placeholder,
+.cdk-drag-preview,.cdk-drag-placeholder,.cdk-drop-list-dragging {
+    z-index: 99999 !important;
+  }

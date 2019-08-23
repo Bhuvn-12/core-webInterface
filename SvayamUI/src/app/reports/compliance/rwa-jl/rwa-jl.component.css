@@ -1,0 +1,28 @@
+.example-full-width {
+  width: 100%;
+}
+
+.container {
+  margin: 15px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+th.mat-header-cell {
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+
+
+}
+.example-container {
+  width:100%;
+  overflow: auto;
+}

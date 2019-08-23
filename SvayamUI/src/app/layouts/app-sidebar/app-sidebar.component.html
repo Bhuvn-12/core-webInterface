@@ -1,0 +1,170 @@
+<div id="sidebar-collapse">
+  <div class="admin-block d-flex">
+    <div>
+      <img [src]="imgURL" width="45px" class="img-circle" />
+    </div>
+    <div class="admin-info">
+      <div class="font-strong">{{user_fname}} {{user_lname}}</div><small></small>
+    </div>
+  </div>
+  <ul class="side-menu metismenu">
+    <li>
+      <a href="javascript:;" routerLinkActive="active" routerLink="/home"><i
+          class="sidebar-item-icon fa fa-th-large"></i>
+        <span class="nav-label">Home</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="javascript:;" routerLinkActive="active"><i class="sidebar-item-icon fas fa-chart-line"></i>
+        <span class="nav-label">Reports</span><i class="fa fa-angle-left arrow"></i></a>
+      <ul class="nav-2-level collapse">
+        <li>
+          <a href="javascript:;" routerLinkActive="active">
+            <span class="nav-label">Control Reports</span><i class="fa fa-angle-left arrow"></i></a>
+          <ul class="nav-3-level collapse">
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink="/reports/trial-bal">Trial Balance</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink="/reports/arr-list">Arrangement Listing</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink="/reports/jrnl-list">Journal Listing</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:;" routerLinkActive="active">
+            <span class="nav-label">Compliance</span><i class="fa fa-angle-left arrow"></i></a>
+          <ul class="nav-3-level collapse">
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink="/reports/rwa-tb">RWA-Trial Balance</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink="/reports/rwa-al">RWA-Arr Listing</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink="/reports/rwa-jl">RWA-Journal Listing</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:;" routerLinkActive="active" routerLink='/reports/adhoc-report'>Ad-Hoc Report </a>
+        </li>
+      </ul>
+    </li>
+
+
+    <li>
+      <a href="javascript:;" routerLinkActive="active"><i class="sidebar-item-icon fas fa-tv"></i>
+        <span class="nav-label">Adjustments</span><i class="fa fa-angle-left arrow"></i></a>
+      <ul class="nav-2-level collapse">
+        <li>
+          <a href="javascript:;" routerLink="/adjust/ilentry" routerLinkActive="active">Instument-LE</a>
+        </li>
+        <li>
+          <a href="javascript:;" routerLink="/adjust/jlentry" routerLinkActive="active">Journal-LE</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="javascript:;"><i class="sidebar-item-icon fas fa-box-open"></i>
+        <span class="nav-label">Source</span><i class="fa fa-angle-left arrow"></i></a>
+      <ul class="nav-2-level collapse">
+        <li>
+          <a href="javascript:;" routerLinkActive="active">
+            <span class="nav-label">Admin</span><i class="fa fa-angle-left arrow"></i></a>
+          <ul class="nav-3-level collapse">
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/source/admin1'>Source Configuration</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/source/rule-ops'>Rule Operation</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/source/rule-test'>Test Rule</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/source/dataobj'>Data Object</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/source/lookup'>Lookup</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:;" routerLinkActive="active" routerLink="/source/manual">Manual</a>
+        </li>
+        <li>
+          <a href="javascript:;" routerLinkActive="active" routerLink="/source/status">Status</a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="javascript:;" routerLink="/operations" routerLinkActive="active"><i
+          class="sidebar-item-icon fa fa-calendar"></i>
+        <span class="nav-label">Operations</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="javascript:;"><i class="sidebar-item-icon fas fa-cog"></i>
+        <span class="nav-label">Settings</span><i class="fa fa-angle-left arrow"></i></a>
+      <ul class="nav-2-level collapse">
+        <li>
+          <a href="javascript:;" routerLinkActive="active">
+            <span class="nav-label">Admin</span><i class="fa fa-angle-left arrow"></i></a>
+          <ul class="nav-3-level collapse">
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/admin/account'>Account</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/admin/user'>User</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/admin/role'>Role</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/admin/permission'>Permission</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:;" routerLinkActive="active">
+            <span class="nav-label">Configuration</span><i class="fa fa-angle-left arrow"></i></a>
+          <ul class="nav-3-level collapse">
+            <li>
+              <a href="javascript:;" routerLinkActive="active"
+                routerLink='/settings/config/organization'>Organization</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/config/pgroup'>Process Group</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/config/ledger'>Ledger</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/config/acccontrol'>Accounting
+                Control</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/config/refdata'>Reference Data</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/config/processing'>Processing</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/config/ops'>Operation</a>
+            </li>
+            <li>
+              <a href="javascript:;" routerLinkActive="active" routerLink='/settings/config/reporting'>Reports</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+</div>

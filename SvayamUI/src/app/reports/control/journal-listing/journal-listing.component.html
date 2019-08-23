@@ -1,0 +1,192 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <mat-label>Gaap</mat-label>
+        <mat-select multiple [formControl]="gaapctl" (selectionChange)="selectGaap($event)">
+          <mat-option *ngFor="let obj of gaapArray" [value]="obj">{{obj}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <mat-label>Currency Type</mat-label>
+        <mat-select [formControl]="currtypectl" (selectionChange)="selectcurrType($event)">
+          <mat-option *ngFor="let obj of currTypeArray" [value]="obj">
+            {{obj}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <mat-label>Currency Code</mat-label>
+        <mat-select [formControl]="currcodectl" (selectionChange)="selectcurrCode($event)">
+          <mat-option *ngFor="let obj of currCodeArray" [value]="obj">
+            {{obj}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <mat-label>Processing Date</mat-label>
+        <mat-select [formControl]="ppdctl" (selectionChange)="selectproDate($event)">
+          <mat-option *ngFor="let obj of ppdArray" [value]="obj">
+            {{obj}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <input type="date" matInput placeholder="accounting Date" (change)="selectacctDate($event)"
+          [formControl]="acct_dt_ctl">
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <mat-label>Account</mat-label>
+        <mat-select [formControl]="acct_num_ctl" (selectionChange)="selectacctNum($event)">
+          <mat-option *ngFor="let obj of acct_numlist" [value]="obj">{{obj.acct_desc}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Arr Number" [formControl]="arr_num_ctl">
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Arr Suffix" [formControl]="arr_suf_ctl">
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Arr Src Code" [formControl]="arr_src_ctl">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" style="text-align: center">
+      <button class="btn btn-primary" (click)="refreshData()">Submit</button>
+    </div>
+  </div>
+</div>
+<table class="table">
+  <tbody>
+    <tr *ngIf="show_trial_btn || show_arr_btn">
+      <td style="padding: 5px;text-align :center;align-content: center">
+        <button type="button" class="btn btn-link" (click)="gotoTrial() " *ngIf="show_trial_btn">
+          Trial Balance
+        </button>
+      </td>
+      <td style="padding: 5px;text-align :center;align-content: center">
+        <button type="button" class="btn btn-link" (click)="gotoArr() " *ngIf="show_arr_btn">
+          Arrangement Listing
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col">
+      <mat-form-field>
+          <mat-label>Column List</mat-label>
+          <mat-select [formControl]="column_ctl" multiple  (selectionChange)="selectColumns($event)">
+            <mat-option *ngFor="let column of column_list" [value]="column">{{column}}</mat-option>
+            <br>
+            <div class="row">
+              <div class="col" style="text-align: center">
+                  <button class="btn btn-primary" (click)="checkAndCall()"> Submit</button>
+              </div>
+            </div>
+          </mat-select>
+      </mat-form-field>
+  </div>
+  <div class="col">
+      <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+    </div>
+</div>
+<div class="example-container">
+  <table mat-table [dataSource]="datasource" matSort style="overflow: auto">
+    <ng-container matColumnDef="jrnl_ln_desc" sticky>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Line Desc
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.jrnl_ln_desc}} </td>
+      <td mat-footer-cell *matFooterCellDef> Total </td>
+    </ng-container>
+    <ng-container matColumnDef="ldgr_type_cd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Type Code
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.ldgr_type_cd}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+    <ng-container matColumnDef="alt_org_unit_cd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Cost Center
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.alt_org_unit_cd}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="bus_func_cd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        bus_func_cd
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.bus_func_cd}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+    <ng-container matColumnDef="txn_amt_type_cd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        txn_amt_type_cd
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.txn_amt_type_cd}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+  
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{column}}
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+    <ng-container matColumnDef="curr_symbol" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{Currency_symbol}} </td>
+      <td mat-footer-cell *matFooterCellDef> {{Currency_symbol}} </td>
+    </ng-container>
+    <ng-container matColumnDef="txn_amt" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Txn_Amt
+      </th>
+      <td mat-cell *matCellDef="let element" style="text-align: right">
+        {{element.txn_amt.toLocaleString(undefined, {'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef style="text-align: right">
+        {{total.toLocaleString(undefined, {'minimumFractionDigits':2,'maximumFractionDigits':2})}}
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay;sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    <tr mat-footer-row *matFooterRowDef="columnsToDisplay; sticky: true"></tr>
+  </table>
+</div>
+  <!--  <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons (page)="onPageChange($event)"> -->
+  <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons>
+  </mat-paginator>
+
+
+<ngx-spinner type="pacman"></ngx-spinner>

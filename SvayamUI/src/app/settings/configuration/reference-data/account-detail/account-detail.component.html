@@ -1,0 +1,106 @@
+
+<br>
+<div class="example-container">
+  <table mat-table [dataSource]="dataSource" matSort>
+  
+
+
+    <!-- lvl1_cd Column -->
+    <ng-container matColumnDef="lvl1_cd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Level1 Code </th>
+      <td mat-cell *matCellDef="let row"> 
+          <span *ngIf="!row.editable">{{row.lvl1_cd}}</span>
+          <input matInput class="form-control" [(ngModel)]="row.lvl1_cd" *ngIf="row.editable"/>
+         
+      </td>
+    </ng-container>
+
+    <!-- lvl1_desc Column -->
+    <ng-container matColumnDef="lvl1_desc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Level1 Desc </th>
+      <td mat-cell *matCellDef="let row"> 
+        <span *ngIf="!row.editable">{{row.lvl1_desc}}</span> 
+         <input matInput class="form-control" [(ngModel)]="row.lvl1_desc" *ngIf="row.editable"/>
+         </td>
+    </ng-container>
+
+    <!-- lvl2_cd Column -->
+    <ng-container matColumnDef="lvl2_cd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Level2 Code </th>
+      <td mat-cell *matCellDef="let row">
+           <span *ngIf="!row.editable"> {{row.lvl2_cd}}</span> 
+          <input matInput class="form-control" [(ngModel)]="row.lvl2_cd" *ngIf="row.editable"/> </td>
+    </ng-container>
+
+    <!-- lvl2_desc Column -->
+    <ng-container matColumnDef="lvl2_desc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Level2 Description </th>
+  <td mat-cell *matCellDef="let row"> 
+         <span *ngIf="!row.editable"> {{row.lvl2_desc}}</span> 
+        <input matInput class="form-control" [(ngModel)]="row.lvl2_desc" *ngIf="row.editable"/> </td>
+    </ng-container>
+     <!-- lvl3_cd Column -->
+     <ng-container matColumnDef="lvl3_cd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Level3 Code </th>
+      <td mat-cell *matCellDef="let row">
+          <span *ngIf="!row.editable"> {{row.lvl3_cd}}</span> 
+        <input matInput class="form-control" [(ngModel)]="row.lvl3_cd" *ngIf="row.editable"/> 
+      </td>
+    </ng-container>
+
+    <!-- lvl3_desc Column -->
+    <ng-container matColumnDef="lvl3_desc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Level3 Description </th>
+      <td mat-cell *matCellDef="let row">
+         <span *ngIf="!row.editable"> {{row.lvl3_desc}}</span>
+        <input matInput class="form-control" [(ngModel)]="row.lvl3_desc" *ngIf="row.editable"/> </td>
+    </ng-container>
+    
+     <!-- lvl4_cd Column -->
+     <ng-container matColumnDef="lvl4_cd">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Level4 Code </th>
+        <td mat-cell *matCellDef="let row"> 
+           <span *ngIf="!row.editable"> {{row.lvl4_cd}}</span>
+          <input matInput class="form-control" [(ngModel)]="row.lvl4_cd" *ngIf="row.editable"/></td>
+      </ng-container>
+  
+      <!-- lvl4_desc Column -->
+      <ng-container matColumnDef="lvl4_desc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Level4 Description </th>
+        <td mat-cell *matCellDef="let row">  
+           <span *ngIf="!row.editable"> {{row.lvl4_desc}}</span> 
+          <input matInput class="form-control" [(ngModel)]="row.lvl4_desc" *ngIf="row.editable"/></td>
+      </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> edit </th>
+      <td mat-cell *matCellDef="let row;let i=index">
+        <button *ngIf="!row.editable" mat-icon-button  color="primary" (click)="edit(row,i)">
+            <mat-icon class="mat-18">edit</mat-icon>
+        </button>
+        <button *ngIf="row.editable" mat-icon-button color="primary" focusable="false" (click)="save_edit(row,i)">
+            <mat-icon class="mat-18">save</mat-icon>
+           
+          </button>
+      </td>
+    </ng-container>
+ 
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Delete </th>
+        <td mat-cell *matCellDef="let row;let i=index">
+          <button mat-icon-button color="warn" (click)="deleteRow(row,i)">
+              <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  
+</div>

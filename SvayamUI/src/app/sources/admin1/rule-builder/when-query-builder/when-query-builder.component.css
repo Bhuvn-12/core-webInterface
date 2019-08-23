@@ -1,0 +1,142 @@
+:host {
+    /*  display: block; */
+     width: 100%;
+   }
+   :host .q-icon {
+     font-style: normal;
+     font-size: 12px;
+   }
+   :host .q-remove-icon::before {
+     content: '❌';
+   }
+   :host .q-add-icon {
+     color: #555;
+   }
+   :host .q-add-icon::before {
+     content: '➕';
+   }
+   :host .q-remove-button {
+     color: #b3415d;
+   }
+   :host .q-switch-group, :host .q-button-group {
+     font-family: "Lucida Grande", Tahoma, Verdana, sans-serif;
+     overflow: hidden;
+   }
+   :host .q-right-align {
+     float: right;
+   }
+   :host .q-button {
+     margin-left: 8px;
+     padding: 2px 8px;
+     background-color: white;
+   }
+   :host .q-control-size {
+     display: inline-block;
+     vertical-align: top;
+   }
+   :host .q-input-control, :host .q-operator-control, :host .q-field-control {
+     display: inline-block;
+     padding: 5px 8px;
+     color: #555;
+     background-color: #fff;
+     background-image: none;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     width: auto;
+   }
+   :host .q-operator-control, :host .q-field-control, :host .q-input-control:not([type='checkbox']) {
+     min-height: 32px;
+     -webkit-appearance: none;
+   }
+   :host .q-switch-label, :host .q-button {
+     float: left;
+     margin-bottom: 0;
+     font-size: 14px;
+     font-weight: normal;
+     text-align: center;
+     text-shadow: none;
+     border: 1px solid rgba(0, 0, 0, 0.2);
+     box-sizing: border-box;
+   }
+   :host .q-switch-label:hover, :host .q-button:hover {
+     cursor: pointer;
+     background-color: #f0f0f0;
+   }
+   :host .q-switch-label {
+     background-color: #e4e4e4;
+     line-height: 24px;
+     padding: 0 8px;
+   }
+   :host .q-switch-radio {
+     position: absolute;
+     clip: rect(0, 0, 0, 0);
+     height: 1px;
+     width: 1px;
+     border: 0;
+     overflow: hidden;
+   }
+   :host .q-switch-radio:checked + .q-switch-label {
+     border: 1px solid #619ed7;
+     background: white;
+     color: #3176b3;
+   }
+   :host .q-invalid-ruleset {
+     border: 1px solid rgba(179, 65, 93, 0.5) !important;
+     background: rgba(179, 65, 93, 0.1) !important;
+   }
+   :host .q-empty-warning {
+     color: #8d252e;
+     text-align: center;
+   }
+   :host .q-ruleset {
+     border: 1px solid #ccc;
+     background: rgba(204, 204, 204, 0.2);
+   }
+   :host .q-ruleset:hover {
+     border: 1px solid rgba(97, 158, 215, 0.5);
+     background: rgba(97, 158, 215, 0.1);
+   }
+   :host .q-rule {
+     border: 1px solid #ccc;
+     background: white;
+   }
+   :host .q-transition {
+     -webkit-transition: all 0.1s ease-in-out;
+     -moz-transition: all 0.1s ease-in-out;
+     -ms-transition: all 0.1s ease-in-out;
+     -o-transition: all 0.1s ease-in-out;
+     transition: all 0.1s ease-in-out;
+   }
+   :host .q-tree {
+     list-style: none;
+     margin: 4px 0 2px;
+   }
+   :host .q-row {
+     padding: 4px 6px;
+     margin-top: 4px;
+   }
+   :host .q-connector {
+     position: relative;
+   }
+   :host .q-connector::before {
+     top: -5px;
+     border-width: 0 0 2px 2px;
+   }
+   :host .q-connector::after {
+     border-width: 0 0 0 2px;
+     top: 50%;
+   }
+   :host .q-connector::before, :host .q-connector::after {
+     content: '';
+     left: -12px;
+     border-color: #ccc;
+     border-style: solid;
+     width: 9px;
+     height: calc(50% + 6px);
+     position: absolute;
+   }
+   :host .q-connector:last-child::after {
+     content: none;
+   }
+   

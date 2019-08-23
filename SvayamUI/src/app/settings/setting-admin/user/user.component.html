@@ -1,0 +1,180 @@
+<div>
+  <table class="table">
+    <tr>
+      <td style="text-align: center;">
+        <button type="button" class="btn btn-primary" (click)="adduser()" style="background-color:#3366FF"> Add user</button>
+      </td>
+      <td style="text-align: center;">
+        <button type="button" class="btn btn-primary"  (click)="invite()" style="background-color:#3366FF">Invite User</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<table mat-table [dataSource]="dataSource">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="user_id">
+    <th mat-header-cell *matHeaderCellDef> ID. </th>
+    <td mat-cell *matCellDef="let element"> {{element.user_id}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> EMAIL ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> NAME </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="ent_cd">
+    <th mat-header-cell *matHeaderCellDef> LEGAL ENTITY </th>
+    <td mat-cell *matCellDef="let element"> {{element.ent_cd}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="role_name">
+    <th mat-header-cell *matHeaderCellDef> ROLE </th>
+    <td mat-cell *matCellDef="let element"> {{element.role_name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef> DELETE </th>
+    <td mat-cell *matCellDef="let element; let i=index"> <button type="button" style="background-color: #FF0000" class="btn btn-danger" (click)="deleteUser(element, i)">
+        DELETE</button> </td>
+  </ng-container>
+  <ng-container matColumnDef="modify">
+    <th mat-header-cell *matHeaderCellDef> MODIFY </th>
+    <td mat-cell *matCellDef="let element"> <button type="button"  style="background-color: #3366FF" class="btn btn-primary"
+        (click)="modifyUser(element)">MODIFY</button> </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+
+<div class="modal fade" id="invite" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Invitation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+
+
+        <mat-form-field>
+          <input type="email" matInput placeholder="email" [(ngModel)]='user_email' pattern=".+@.+\..+"  required>
+          <mat-error></mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Role" (selectionChange)="roleSelect($event)" required>
+            <mat-option *ngFor="let role of roleArr" [value]="role">{{role.role_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Legal Entity" (selectionChange)="legalentityselect($event)" required>
+            <mat-option *ngFor="let legal of entArr" value="{{legal.ent_cd}}">{{legal.ent_desc}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger"  data-dismiss="modal" style="background-color: #FF0000">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="sentinvite()" id="sentbtn">Sent Invitation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <mat-form-field>
+          <mat-select placeholder="username" (selectionChange)="userSelect($event)" required>
+            <mat-option *ngFor="let uname of userArr" [value]="uname">{{uname.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Role" (selectionChange)="roleSelect($event)" required>
+            <mat-option *ngFor="let role of roleArr" [value]="role">{{role.role_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Legal Entity" (selectionChange)="legalentityselect($event)" required>
+            <mat-option *ngFor="let legal of entArr" value="{{legal.ent_cd}}">{{legal.ent_desc}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" style="background-color: #FF0000">Close</button>
+        <button type="button" class="btn btn-success" (click)="addUserdetail()">Add User</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modify" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modify User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <mat-form-field>
+          <input type="email" matInput placeholder="email" [(ngModel)]='user_email' pattern=".+@.+\..+"  required>
+        </mat-form-field>
+<!--         <mat-form-field>
+          <input matInput placeholder="name" [(ngModel)]='name'>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <mat-select placeholder="Role" (selectionChange)="roleSelect($event)" required>
+            <mat-option *ngFor="let role of roleArr" [value]="role">{{role.role_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Legal Entity" (selectionChange)="leModify($event)" required>
+            <mat-option *ngFor="let legal of entArr" [value]="legal">{{legal.ent_desc}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" style="background-color: #FF0000">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="modify()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

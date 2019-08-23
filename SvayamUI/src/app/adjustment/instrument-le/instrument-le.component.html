@@ -1,0 +1,338 @@
+<div class="modal-content">
+  <div class="modal-body">
+    <form [formGroup]="MJPForm">
+      <table class="table">
+        <tr>
+          <td colspan="2" style="text-align: center"><b>ARRANGEMENT DETAILS</b> </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="arr_src_cd" type="text" matInput placeholder="Arr src Cd" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <mat-label>Cust Industry Code</mat-label>
+                <mat-select formControlName="customer_type_desc">
+                  <mat-option *ngFor="let obj of customerArr" [value]="obj">
+                    {{obj.customer_type_desc}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="arr_num" type="text" matInput placeholder="Arrangement Num" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <mat-label>Detail Prod Desc</mat-label>
+                <mat-select formControlName="dtl_prod_desc">
+                  <mat-option *ngFor="let obj of productArr" [value]="obj">
+                    {{obj.dtl_prod_desc}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="arr_suf" type="text" matInput placeholder="Arr Suf Num" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <mat-label>Dtl Cust Ind Cd</mat-label>
+                <mat-select formControlName="dtl_customer_type_cd">
+                  <mat-option *ngFor="let obj of customerArr" [value]="obj">
+                    {{obj.dtl_customer_type_desc}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <!-- <mat-form-field>
+                <input formControlName="prod_cd" type="text" matInput placeholder="Prd Cd" required>
+              </mat-form-field> -->
+              <mat-form-field>
+                <mat-label>Prod Cd</mat-label>
+                <mat-select formControlName="prod_cd">
+                  <mat-option *ngFor="let obj of productArr" [value]="obj">
+                    {{obj.prod_cd}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align:center"><b>SUMMARY DETAILS</b></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="alt_org_unit_cd" type="text" matInput placeholder="Alt Org Unit Cd" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="partner_org_unit_cd" type="text" matInput placeholder="Partner Org Unit Cd"
+                  required>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="file_cd" type="text" matInput placeholder="File Cd" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <mat-label>A/C Num</mat-label>
+                <mat-select formControlName="account_number">
+                  <mat-option *ngFor="let obj of AccNumArr" [value]="obj">
+                    {{obj.account_number}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="file_subldgr_cd" type="text" matInput placeholder="File Sbi Cd" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="lcl_acct_num" type="text" matInput placeholder="Ldgr A/C Num" required>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="ldgr_src_cd" type="text" matInput placeholder="Ldgr Src Cd" required>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <table class="table">
+        <tr>
+          <td colspan="3" style="text-align: center"><b>JOURNAL DETAILS</b></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <mat-label>Journal Ent Cd</mat-label>
+                <mat-select formControlName="jrnl_entry_cd">
+                  <mat-option value="A">A</mat-option>
+                  <mat-option value="M">M</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="txn_amt" type="text" matInput placeholder="Txn Amt" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="jrnl_id" type="text" matInput placeholder="Journal Id" required>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <mat-label>Curr Code</mat-label>
+                <mat-select formControlName="tgt_curr_cd">
+                  <mat-option *ngFor="let obj of currencyArr " [value]="obj">
+                    {{obj}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="ldgr_recon_id" type="text" matInput placeholder="Lgr Recon Id" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="jrnl_line_id" type="text" matInput placeholder="Jrnl Lin Num" required>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="acct_dt" type="date" matInput placeholder="Accounting Dt" required>
+              </mat-form-field>
+
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="src_trace_key" type="text" matInput placeholder="Src Trc Key" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="jrnl_parent_type_cd" type="text" matInput placeholder="Jrnl Prnt Typ Cd"
+                  required>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+
+              <mat-form-field>
+                <mat-label>DB/CR</mat-label>
+                <mat-select formControlName="db_cr_ind">
+                  <mat-option value="DB">DB</mat-option>
+                  <mat-option value="CR">CR</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="jrnl_ext_id" type="text" matInput placeholder="Jrnl Extn Key Id" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="jrnl_parent_key" type="text" matInput placeholder="Jrnl Prnt Key" required>
+              </mat-form-field>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="example-container">
+              <mat-form-field>
+                <input formControlName="jrnl_dtl_id" type="text" matInput placeholder="Jrnl Dtl Id" required>
+              </mat-form-field>
+            </div>
+          </td>
+          <td>
+            <div class="text-center">
+              <button type="ADD" class="btn btn-primary" (click)="Add()">
+                ADD
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <div style="width: 100%">
+      <table mat-table [dataSource]="datasource">
+        <ng-container matColumnDef="arr_src_cd">
+          <th mat-header-cell *matHeaderCellDef> Arr Src Code</th>
+          <td mat-cell *matCellDef="let element">{{element.arr_src_cd}} </td>
+        </ng-container>
+        <ng-container matColumnDef="arr_num">
+          <th mat-header-cell *matHeaderCellDef> Arr Num</th>
+          <td mat-cell *matCellDef="let element">{{element.arr_num}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="arr_suf">
+          <th mat-header-cell *matHeaderCellDef> Arr Suffix</th>
+          <td mat-cell *matCellDef="let element">{{element.arr_suf}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acct_dt">
+          <th mat-header-cell *matHeaderCellDef> Accounting Date</th>
+          <td mat-cell *matCellDef="let element">{{element.acct_dt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dtl_prod_desc">
+          <th mat-header-cell *matHeaderCellDef> Product Name</th>
+          <td mat-cell *matCellDef="let element">{{element.dtl_prod_desc.dtl_prod_desc}} </td>
+        </ng-container>
+        <ng-container matColumnDef="txn_amt">
+          <th mat-header-cell *matHeaderCellDef> Amount</th>
+          <td mat-cell *matCellDef="let element">{{element.txn_amt}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+            Action
+          </th>
+          <td mat-cell *matCellDef="let row;let i=index; ">
+            <button mat-icon-button color="accent" (click)="modify(row,i)">
+              <mat-icon aria-label="edit">edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="accent" (click)="delete(row,i)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+    </div>
+    <div>
+      <div class="text-center">
+        <button type="SUBMIT" class="btn btn-primary" (click)="Submit()">
+          SUBMIT
+        </button>
+      </div>
+    </div>

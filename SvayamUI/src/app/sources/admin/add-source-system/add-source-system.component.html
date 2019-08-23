@@ -1,0 +1,819 @@
+<!-- Source System Modal -->
+<div class="modal fade" id="A" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Source Systems</h5>
+        <button type="button" aria-label="Close" (click)="routeAdminPage()">
+          <i class="far fa-times-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="width: 100%">
+          <table mat-table [dataSource]="srcSource1">
+            <ng-container matColumnDef="ss_name">
+              <th mat-header-cell *matHeaderCellDef> Source Sytems</th>
+              <td mat-cell *matCellDef="let element">{{element.ss_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button color="primary" (click)="openSModel('','','add')">
+                  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                </button>
+              </th>
+              <td mat-cell *matCellDef="let row;let i=index; ">
+                <button mat-icon-button color="accent" (click)="openSModel(i,row,'edit')">
+                  <mat-icon aria-label="Edit">edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="accent" (click)="deleteItem(row,i)">
+                  <mat-icon aria-label="Delete">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="SdisplayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: SdisplayedColumns;">
+            </tr>
+          </table>
+
+          <mat-paginator #ss_new_paginator [pageSizeOptions]="[5, 10, 20]">
+          </mat-paginator>
+        </div>
+
+        <div style="width: 100%">
+          <table mat-table [dataSource]="srcSource">
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>Select
+              </th>
+              <td mat-cell *matCellDef="let row;let i=index;">
+                <mat-checkbox (click)="checked(row,i)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+            <!--  Level3 Desc Column -->
+            <ng-container matColumnDef="ss_name">
+              <th mat-header-cell *matHeaderCellDef> Source Sytems</th>
+              <td mat-cell *matCellDef="let element">{{element.ss_name}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+          </table>
+          <mat-paginator #ss_exist_paginator [pageSizeOptions]="[5, 10, 20]">
+          </mat-paginator>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="openprodModal()">NEXT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Product Modal -->
+<div class="modal fade" id="B" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Product Details</h5>
+        <button type="button" aria-label="Close" (click)="routeAdminPage()">
+          <i class="far fa-times-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="width: 100%">
+          <table mat-table [dataSource]="prodsource1">
+            <ng-container matColumnDef="dtl_prod_desc">
+              <th mat-header-cell *matHeaderCellDef> Products</th>
+              <td mat-cell *matCellDef="let element">{{element.dtl_prod_desc}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ss_name">
+              <th mat-header-cell *matHeaderCellDef> Source System</th>
+              <td mat-cell *matCellDef="let element">{{element.ss_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button color="primary" (click)="openPModel('','','add')">
+                  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                </button>
+              </th>
+              <td mat-cell *matCellDef="let row;let i=index; ">
+                <button mat-icon-button color="accent" (click)="openPModel(i,row,'edit')">
+                  <mat-icon aria-label="Edit">edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="accent" (click)="deleteItemp(row,i)">
+                  <mat-icon aria-label="Delete">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="spdisplayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: spdisplayedColumns;">
+            </tr>
+          </table>
+          <mat-paginator #prod_new_paginator [pageSizeOptions]="[5, 10, 20]">
+          </mat-paginator>
+        </div>
+        <div style="width: 100%"></div>
+        <table mat-table [dataSource]="prodsource">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>Select
+            </th>
+            <td mat-cell *matCellDef="let row;let i=index;">
+              <mat-checkbox (click)="checkedp(row,i)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="dtl_prod_desc">
+            <th mat-header-cell *matHeaderCellDef> Products</th>
+            <td mat-cell *matCellDef="let element">{{element.dtl_prod_desc}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="pdisplayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: pdisplayedColumns;">
+          </tr>
+        </table>
+        <mat-paginator #prod_exist_paginator [pageSizeOptions]="[5, 10, 20]">
+        </mat-paginator>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="opensrcModal()">PREV</button>
+        <button type="button" class="btn btn-primary" (click)="openEventModal()">NEXT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Event Model-->
+<div class="modal fade" id="C" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Event Details</h5>
+        <button type="button" aria-label="Close" (click)="routeAdminPage()">
+          <i class="far fa-times-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="width: 100%">
+          <table mat-table [dataSource]="evesource1">
+            <ng-container matColumnDef="ev_name">
+              <th mat-header-cell *matHeaderCellDef> Event Name</th>
+              <td mat-cell *matCellDef="let element">{{element.ev_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dtl_prod_desc">
+              <th mat-header-cell *matHeaderCellDef> Product Name</th>
+              <td mat-cell *matCellDef="let element">{{element.dtl_prod_desc}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button color="primary" (click)="openEModel('','','add')">
+                  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                </button>
+              </th>
+              <td mat-cell *matCellDef="let row;let i=index; ">
+                <button mat-icon-button color="accent" (click)="openEModel(i,row,'edit')">
+                  <mat-icon aria-label="Edit">edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="accent" (click)="deleteIteme(row,i)">
+                  <mat-icon aria-label="Delete">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="esdisplayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: esdisplayedColumns;">
+            </tr>
+          </table>
+          <mat-paginator #event_new_paginator [pageSizeOptions]="[5, 10, 20]">
+          </mat-paginator>
+        </div>
+        <div style="width: 100%"></div>
+        <table mat-table [dataSource]="evesource">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>Select
+            </th>
+            <td mat-cell *matCellDef="let row;let i=index;">
+              <mat-checkbox (click)="checkede(row,i)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="ev_name">
+            <th mat-header-cell *matHeaderCellDef> Events</th>
+            <td mat-cell *matCellDef="let element">{{element.ev_name}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="edisplayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: edisplayedColumns;">
+          </tr>
+        </table>
+        <mat-paginator #event_exist_paginator [pageSizeOptions]="[5, 10, 20]">
+        </mat-paginator>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="openprodModal()">PREV</button>
+        <button type="button" class="btn btn-primary" (click)="openaccountModal()">NEXT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Accounts Model-->
+<div class="modal fade" id="D" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Account Details</h5>
+        <button type="button" aria-label="Close" (click)="routeAdminPage()">
+          <i class="far fa-times-circle" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="width: 100%">
+          <table mat-table [dataSource]="acsource1">
+            <ng-container matColumnDef="acct_desc">
+              <th mat-header-cell *matHeaderCellDef> Account Desc</th>
+              <td mat-cell *matCellDef="let element">{{element.acct_desc}} </td>
+            </ng-container>
+            <ng-container matColumnDef="ev_name">
+              <th mat-header-cell *matHeaderCellDef> Event Name </th>
+              <td mat-cell *matCellDef="let element">{{element.ev_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>
+                <button mat-icon-button color="primary" (click)="openACModal('','','add')">
+                  <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+                </button>
+              </th>
+              <td mat-cell *matCellDef="let row;let i=index; ">
+                <button mat-icon-button color="accent" (click)="openACModal(i,row,'edit')">
+                  <mat-icon aria-label="Edit">edit</mat-icon>
+                </button>
+
+                <button mat-icon-button color="accent" (click)="deleteItem_ac(row,i)">
+                  <mat-icon aria-label="Delete">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="acseldisplayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: acseldisplayedColumns;">
+            </tr>
+          </table>
+          <mat-paginator #account_new_paginator [pageSizeOptions]="[5, 10, 20]">
+          </mat-paginator>
+        </div>
+        <div style="width: 100%"></div>
+        <table mat-table [dataSource]="acsource">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>Select
+            </th>
+            <td mat-cell *matCellDef="let row;let i=index;">
+              <mat-checkbox (click)="checked_ac(row,i)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="acct_desc">
+            <th mat-header-cell *matHeaderCellDef> Account Desc </th>
+            <td mat-cell *matCellDef="let element">{{element.acct_desc}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="acdisplayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: acdisplayedColumns;">
+          </tr>
+        </table>
+        <mat-paginator #account_exist_paginator [pageSizeOptions]="[5, 10, 20]">
+        </mat-paginator>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="openEventModal()">PREV</button>
+        <button type="button" class="btn btn-primary" (click)="openCustomerModal()">NEXT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Customer Model-->
+<div class="modal fade" id="E" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <table mat-table [dataSource]="csource1">
+          <ng-container matColumnDef="dtl_customer_type_desc">
+            <th mat-header-cell *matHeaderCellDef> Customer Name</th>
+            <td mat-cell *matCellDef="let element">{{element.dtl_customer_type_desc}} </td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>
+              <button mat-icon-button color="primary" (click)="openCModal('','','add')">
+                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let row;let i=index; ">
+              <button mat-icon-button color="accent" (click)="openCModal(i,row,'edit')">
+                <mat-icon aria-label="Edit">edit</mat-icon>
+              </button>
+
+              <button mat-icon-button color="accent" (click)="deleteItemc(row,i)">
+                <mat-icon aria-label="Delete">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="csdisplayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: csdisplayedColumns;">
+          </tr>
+        </table>
+        <mat-paginator #customer_new_paginator [pageSizeOptions]="[5, 10, 20]">
+        </mat-paginator>
+        <table mat-table [dataSource]="csource">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>Select
+            </th>
+            <td mat-cell *matCellDef="let row;let i=index;">
+              <mat-checkbox (click)="checkedc(row,i)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="dtl_customer_type_desc">
+            <th mat-header-cell *matHeaderCellDef> Customers</th>
+            <td mat-cell *matCellDef="let element">{{element.dtl_customer_type_desc}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="cdisplayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: cdisplayedColumns;">
+          </tr>
+        </table>
+        <mat-paginator #customer_exist_paginator [pageSizeOptions]="[5, 10, 20]">
+        </mat-paginator>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="openaccountModal()">PREV</button>
+        <button type="button" class="btn btn-primary" (click)="postfinalData()">SAVE</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="routeAdminPage()">CANCEL</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Src create modal-->
+<div class="modal fade" id="createsrc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="sourceForm">
+          <table>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="ss_name" type="text" matInput placeholder="Source System Name" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container1">
+                  <mat-checkbox formControlName="is_automatic">Do You Want to set it up as Automatic?
+                  </mat-checkbox>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="kafka_ip" matInput placeholder="Kafka Ip">
+                  </mat-form-field>
+                </div>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="kafka_port" matInput placeholder="Kafka Running port">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="topic" matInput placeholder="Kafka Topic">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="add_edit_src()">SAVE</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Product Create modal-->
+
+<div class="modal fade" id="Createprdct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="prodForm">
+          <table>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="prod_cd" matInput placeholder="PRODUCT CODE">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="prod_desc" matInput placeholder="PRODUCT NAME">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="dtl_prod_desc" matInput placeholder=" DETAIL PRODUCT NAME">
+                  </mat-form-field>
+                </div>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="dtl_prod_cd" matInput placeholder=" DETAIL PRODUCT CODE">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="off_balance_sheet_exposure_type" matInput
+                      placeholder="OFF BALANCESHEET EXPOSURE TYPE ">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="credit_conversion_factor" matInput placeholder="CREDIT CONVERSION FACTOR">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <mat-label>Select Source System</mat-label>
+                    <mat-select formControlName="src_sys" required>
+                      <mat-option *ngFor="let obj of srcArray" [value]="obj">
+                        {{obj.ss_name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </td>
+
+            </tr>
+
+          </table>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="add_edit_prod()">SAVE</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Event create modal-->
+
+<div class="modal fade" id="CreatEvnt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <form [formGroup]="eveForm">
+          <table>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="ev_name" matInput placeholder="EVENT NAME" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <mat-label>Generated Record Type</mat-label>
+                    <mat-select formControlName="screen_to_project" required>
+                      <mat-option *ngFor="let obj of sprojectArray" [value]="obj">
+                        {{obj.view}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <mat-label>Select Product</mat-label>
+                    <mat-select formControlName="prd_sys" required>
+                      <mat-option *ngFor="let obj of prodArray" [value]="obj">
+                        {{obj.dtl_prod_desc}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="add_edit_event()">SAVE</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Account Create modal-->
+
+<div class="modal fade" id="AddAccount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="acForm">
+          <table>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="account_number" matInput placeholder="A/C NO" required>
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="acct_desc" matInput placeholder="A/C DESC" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <mat-label>Select Account Type</mat-label>
+                    <mat-select formControlName="acct_type" (selectionChange)="selectAccType($event)" required>
+                      <mat-option value='ASSET'>
+                        ASSET
+                      </mat-option>
+                      <mat-option  value='LIABILITY'>
+                        LIABILITY
+                      </mat-option>
+                      <mat-option value='EQUITY'>
+                        EQUITY
+                      </mat-option>
+                      <mat-option value='INCOME'>
+                        INCOME
+                      </mat-option>
+                      <mat-option value='EXPENSE'>
+                        EXPENSE
+                      </mat-option>
+                    </mat-select>
+                  <!--   <input matInput placeholder="A/C TYPE" required> -->
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="acct_type_cd" matInput placeholder="A/C TYPE CODE" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="account_grp_cd" matInput placeholder="A/C GROUPING CODE" required>
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="lr_exposure_type" matInput placeholder="LIQUIDITY RATIO EXPOSURE TYPE">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="lr_sub_cat" matInput placeholder="LIQUIDITY RATIO SUB CATEGORY">
+                  </mat-form-field>
+                </div>
+              </td>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <mat-label>Select Events</mat-label>
+                    <mat-select multiple [formControl]="eventCtl" (selectionChange)="selectEvent($event)" required>
+                      <mat-option *ngFor="let obj of eveArray" [value]="obj">
+                        {{obj.ev_name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-checkbox formControlName="bsht_ind">BALANCE SHEET INDICATOR</mat-checkbox>
+                </div>
+              </td>
+              <td>
+                <div class="example-container">
+
+                  <mat-checkbox formControlName="trl_bal_ind">TRIAL BAL INDICATOR</mat-checkbox>
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+
+                  <mat-checkbox formControlName="incm_stmt_ind">INCOME STMT INDICATOR</mat-checkbox>
+
+                </div>
+              </td>
+              <td>
+                <div class="example-container">
+
+                  <mat-checkbox formControlName="perfm_account_ind">PERFORMANCE A/C INDICATOR</mat-checkbox>
+
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-checkbox formControlName="carry_fwd_ind">C/F INDICATOR</mat-checkbox>
+                </div>
+              </td>
+              <td>
+                <div class="example-container1">
+
+                  <mat-checkbox formControlName="rwa_off_ind">RWA OFF INDICATOR</mat-checkbox>
+
+                </div>
+              </td>
+            </tr>
+
+          </table>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="add_edit_account()">SAVE</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Customer Create Modal-->
+<div class="modal fade" id="CreatCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <form [formGroup]="CustForm">
+          <table>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="customer_type_cd" matInput placeholder="CUSTOMER TYPE CODE" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="customer_type_desc" matInput placeholder="CUSTOMER TYPE DESCRIPTION" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="dtl_customer_type_cd" matInput placeholder="DETAIL CUSTOMER TYPE CODE" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="dtl_customer_type_desc" matInput
+                      placeholder="DETAIL CUSTOMER TYPE DESCRIPTION" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="cust_segment" matInput placeholder="CUSTOMER SEGMENT" required>
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="lr_exposure_type" matInput placeholder="LIQUIDITY RATIO EXPOSURE TYPE">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="example-container">
+                  <mat-form-field>
+                    <input formControlName="risk_weight" matInput placeholder="RISK WEIGHT">
+                  </mat-form-field>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="add_edit_cust()">SAVE</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner type="pacman"></ngx-spinner>

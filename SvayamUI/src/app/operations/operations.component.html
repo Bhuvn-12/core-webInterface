@@ -1,0 +1,488 @@
+<div class="row">
+  <div class="col-12 ">
+    <div class="d-flex flex-row justify-content-center align-items-center
+  text-dark border border-bottom rounded" style="padding: 4px; margin-top: 2%; background: grey;">
+      <div class="d-flex flex-row justify-content-start align-items-center text-dark">
+        <div>
+          <h4 class=" font-weight-bold "><b>Current Plateformn Processing Date :
+            </b> </h4>
+        </div>
+        <div class="font-weight-bold">
+          <h4 class="font-weight-bold"><b>{{currPpd}}</b></h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 ">
+    <div class="d-flex flex-row justify-content-center align-items-center
+  text-dark border border-bottom rounded">
+      <table>
+        <tr>
+          <td style=" padding:5px">
+            <h4><b>Activity Dashboard </b></h4>
+          </td>
+          <td style=" padding:5px">
+            <select [formControl]="ppdctl" class="browser-default custom-select" (change)="changePpd($event)"
+              id="proDt">
+              <option *ngFor="let obj of ppdArr" [value]="obj">{{obj}}</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-12 ">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4 style="align-content: center"> Expand to Operate</h4>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Reference Processes
+            </mat-panel-title>
+
+
+          </mat-expansion-panel-header>
+
+          <div class="process_class" class="row">
+            <div class="col">
+              <p class="process class">Exchange Rate</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('ExchangeRate')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('ExchangeRate')=='Active'" type="button" (click)="deactivate('ExchangeRate')"
+                class="btn btn-primary
+  btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('ExchangeRate')!='Active'" type="button" (click)="activate('ExchangeRate')"
+                class="btn btn-primary btn-fw">Activate</button>
+            </div>
+            <div class="col">
+              <p>{{countObj.get('ExchangeRate')}}
+              </p>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Source System
+            </mat-panel-title>
+
+
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Involved Party</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('Ip')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('Ip')=='Active'" type="button" (click)="deactivate('Ip')"
+                class="btn btn-primary btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('Ip')!='Active'" type="button" (click)="activate('Ip')"
+                class="btn btn-primary btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('Ip')}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Event</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('Event')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('Event')=='Active'" type="button" (click)="deactivate('Event')"
+                class="btn btn-primary btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('Event')!='Active'" type="button" (click)="activate('Event')"
+                class="btn btn-primary btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('Event')}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Transaction</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('Prepare')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('Prepare')=='Active'" type="button" (click)="deactivate('Prepare')"
+                class="btn btn-primary btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('Prepare')!='Active'" type="button" (click)="activate('Prepare')"
+                class="btn btn-primary btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('Prepare')}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Arrangement</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('Arrangement')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('Arrangement')=='Active'" type="button" (click)="deactivate('Arrangement')"
+                class="btn btn-primary btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('Arrangement')!='Active'" type="button" (click)="activate('Arrangement')"
+                class="btn btn-primary btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('Arrangement')}}</p>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Journal Processes
+            </mat-panel-title>
+
+
+          </mat-expansion-panel-header>
+
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Prepare</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('Prepare')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('Prepare')=='Active'" type="button" (click)="deactivate('Prepare')"
+                class="btn btn-primary btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('Prepare')!='Active'" type="button" (click)="activate('Prepare')"
+                class="btn btn-primary btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>0-{{countObj.get('Prepare')}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Arrangement Reclass</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('ArrangementReclass')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('ArrangementReclass')=='Active'" type="button"
+                (click)="deactivate('ArrangementReclass')" class="btn btn-primary
+  btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('ArrangementReclass')!='Active'" type="button"
+                (click)="activate('ArrangementReclass')" class="btn btn-primary
+  btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('ArrangementReclass')}}-{{countObj.get('Prepare')+countObj.get('ArrangementReclass')}}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Intra Unit Elimination</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('IntraUnitElimination')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('IntraUnitElimination')=='Active'" type="button"
+                (click)="deactivate('IntraUnitElimination')" class="btn btn-primary
+  btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('IntraUnitElimination')!='Active'" type="button"
+                (click)="activate('IntraUnitElimination')" class="btn btn-primary
+  btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>
+                {{countObj.get('IntraUnitElimination')}}-{{countObj.get('Prepare')+countObj.get('ArrangementReclass')+countObj.get('IntraUnitElimination')}}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Gaap Reclass</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('GaapReclass')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('GaapReclass')=='Active'" type="button" (click)="deactivate('GaapReclass')"
+                class="btn btn-primary btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('GaapReclass')!='Active'" type="button" (click)="activate('GaapReclass')"
+                class="btn btn-primary btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>
+                {{countObj.get('GaapReclass')}}-{{countObj.get('Prepare')+countObj.get('ArrangementReclass')+countObj.get('IntraUnitElimination')+countObj.get('GaapReclass')}}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Currency Conversion</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('CurrencyConversion')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('CurrencyConversion')=='Active'" type="button"
+                (click)="deactivate('CurrencyConversion')" class="btn btn-primary
+  btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('CurrencyConversion')!='Active'" type="button"
+                (click)="activate('CurrencyConversion')" class="btn btn-primary
+  btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>
+                {{countObj.get('CurrencyConversion')}}-{{countObj.get('Prepare')+countObj.get('ArrangementReclass')+countObj.get('IntraUnitElimination')+countObj.get('GaapReclass')+countObj.get('CurrencyConversion')}}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Currency Revaluation</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('CurrencyRevaluation')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('CurrencyRevaluation')=='Active'" type="button"
+                (click)="deactivate('CurrencyRevaluation')" class="btn btn-primary
+  btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('CurrencyRevaluation')!='Active'" type="button"
+                (click)="activate('CurrencyRevaluation')" class="btn btn-primary
+  btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>
+                {{countObj.get('CurrencyRevaluation')}}-{{countObj.get('Prepare')+countObj.get('ArrangementReclass')+countObj.get('IntraUnitElimination')+countObj.get('GaapReclass')+countObj.get('CurrencyConversion')+countObj.get('CurrencyRevaluation')}}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Currency Translation</p>
+            </div>
+            <div class="col">
+              <p>{{statusObj.get('CurrencyTranslation')}}</p>
+            </div>
+            <div class="col">
+              <button *ngIf="statusObj.get('CurrencyTranslation')=='Active'" type="button"
+                (click)="deactivate('CurrencyTranslation')" class="btn btn-primary
+  btn-fw">Deactivate</button>
+              <button *ngIf="statusObj.get('CurrencyTranslation')!='Active'" type="button"
+                (click)="activate('CurrencyTranslation')" class="btn btn-primary
+  btn-fw">Activate</button>
+            </div>
+            <div class="col" style="text-align: right">
+              <p>
+                {{countObj.get('CurrencyTranslation')}}-{{countObj.get('Prepare')+countObj.get('ArrangementReclass')+countObj.get('IntraUnitElimination')+countObj.get('GaapReclass')+countObj.get('CurrencyConversion')+countObj.get('CurrencyRevaluation')+countObj.get('CurrencyTranslation')}}
+              </p>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Real Time Balance Processes
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>Delta JSF Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('JsfGeneration')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('JsfGeneration')=='Active'" type="button"
+  (click)="deactivate('JsfGeneration')" class="btn btn-primary
+  btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('JsfGeneration')!='Active'" type="button"
+  (click)="activate('JsfGeneration')" class="btn btn-primary
+  btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('JsfGeneration')}}</p>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Batch Processes
+            </mat-panel-title>
+
+
+          </mat-expansion-panel-header>
+
+          <!-- <p>Exchange Rate: </p>
+  <p style="margin-left: 80%">1200</p> -->
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>JSF Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('jsf')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('jsf')=='Active'" type="button"
+  (click)="deactivate('jsf')"
+  class="btn btn-primary btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('jsf')!='Active'" type="button"
+  (click)="activate('jsf')"
+  class="btn btn-primary btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('jsf')}}</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>RSF0 Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('rsf0')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('rsf0')=='Active'" type="button"
+  (click)="deactivate('rsf0')"
+  class="btn btn-primary btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('rsf0')!='Active'" type="button"
+  (click)="activate('rsf0')"
+  class="btn btn-primary btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('rsf0')}}</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>RSF1 Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('rsf1')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('rsf1')=='Active'" type="button"
+  (click)="deactivate('rsf1')"
+  class="btn btn-primary btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('rsf1')!='Active'" type="button"
+  (click)="activate('rsf1')"
+  class="btn btn-primary btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('rsf1')}}</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>RSF2 Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('rsf2')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('rsf2')=='Active'" type="button"
+  (click)="deactivate('rsf2')"
+  class="btn btn-primary btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('rsf2')!='Active'" type="button"
+  (click)="activate('rsf2')"
+  class="btn btn-primary btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('rsf2')}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>RSF3 Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('rsf3')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('rsf3')=='Active'" type="button"
+  (click)="deactivate('rsf3')"
+  class="btn btn-primary btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('rsf3')!='Active'" type="button"
+  (click)="activate('rsf3')"
+  class="btn btn-primary btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('rsf3')}}</p>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>RSF4 Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('rsf4')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('rsf4')=='Active'" type="button"
+  (click)="deactivate('rsf4')"
+  class="btn btn-primary btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('rsf4')!='Active'" type="button"
+  (click)="activate('rsf4')"
+  class="btn btn-primary btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('rsf4')}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="text-align: left">
+              <p>RSF5 Generation</p>
+            </div>
+            <div class="col">
+              <!-- <p>{{statusObj.get('rsf5')}}</p> -->
+            </div>
+            <div class="col">
+              <!-- <button *ngIf="statusObj.get('rsf5')=='Active'" type="button"
+  (click)="deactivate('rsf5')"
+  class="btn btn-primary btn-fw">Deactivate</button>
+  <button *ngIf="statusObj.get('rsf5')!='Active'" type="button"
+  (click)="activate('rsf5')"
+  class="btn btn-primary btn-fw">Activate</button> -->
+            </div>
+            <div class="col" style="text-align: right">
+              <p>{{countObj.get('rsf5')}}</p>
+            </div>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.modal-content {
+  margin-top: 85px;
+}
+
+.select_product {
+  border-radius: 25px;
+  background-color: darkgrey;
+  width: 100px;
+  text-align: center
+}
+
+.select_event {
+  border-radius: 25px;
+  background-color: darkgrey;
+  width: 100px;
+  text-align: center
+}
+
+option {
+  margin: 5px
+}
+
+.btn {
+  margin: 10px;
+}
+
+.text {
+  margin-left: 10px
+}
+
+form {
+  border: solid 1px;
+  margin-top: 10px
+}
+
+#form_row {
+  margin-top: 25px;
+  margin-left: 10px;
+  margin-right: 10px
+}

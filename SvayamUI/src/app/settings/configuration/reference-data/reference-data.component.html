@@ -1,0 +1,19 @@
+
+
+<div class="container">
+  <div class="text-center">
+    <mat-form-field>
+      <mat-label>Select your Option (required)</mat-label>
+      <select matNativeControl required  (change)="selectedOption($event)" >
+         <option label="--select option --"></option> 
+        <option>Accounts</option>
+        <option>Customers</option>
+        <option>Products</option>
+      </select>
+      
+    </mat-form-field>
+  </div>
+  </div>
+  <div>
+   <router-outlet></router-outlet> 
+  </div>

@@ -1,0 +1,56 @@
+ 
+
+<div class="reg-bg">
+        <div class="reg-page">
+          <div class="form">
+      
+       <form class="reg-form" [formGroup]="myGroup">
+                <h1 style="font-size:2vw; ">Create Account</h1>
+                <div class="form-group">
+                <input  class="form-control" type="text" placeholder="Email Address" formControlName="useremail"  [ngClass]="{ 'is-invalid': submitted && f.useremail.errors }" required/>
+                <div *ngIf="submitted && f.useremail.errors" class="invalid-feedback">
+                  <div *ngIf="f.useremail.errors.required" > Email is required</div>
+                  <div *ngIf="f.useremail.errors.email" >Invalid email</div>
+              </div>
+              </div>
+              <div class="form-group">
+                <select class="myselect"  (change)="selectedOption($event)"  required>
+                  <option>Select Account</option>
+                  <option>New</option>
+                  <option>Exist</option>
+                </select>
+                <div *ngIf="submitted && invalidselect" class="invalid-feedback" style="display: block">
+                  <div > Select Atleast One</div>
+              </div>
+              </div>
+              <div class="form-group">
+                <div  *ngIf="is_show">
+                  <input  class="form-control" type="text" placeholder="Key" formControlName="key"  [ngClass]="{ 'is-invalid': submitted && f.key.errors }" required/>
+                  <div *ngIf="submitted && f.key.errors" class="invalid-feedback">
+                    <div *ngIf="f.key.errors.required" > Key is required</div>
+                </div>
+                  </div>
+              </div>
+                  <div class="form-group">
+                  <input type="password" formControlName="password" class="form-control"
+                  placeholder="Password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required" >Password is required</div>
+                    <div *ngIf="f.password.errors.minlength" >Password must be at least 6 characters</div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <input type="password" formControlName="confirmPassword" placeholder="Enter Password Again"class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                  <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                      <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                  </div>
+                  <div *ngIf="submitted && passwdmatch " class="invalid-feedback" style="display: block">
+                    <div > Password not match</div>
+                </div>
+              </div>
+                <button class="create" (click)= 'onSubmit()'>create</button>
+                <p class="message">Already registered? <a routerLink="/login">Sign In</a></p>
+            </form>
+          </div>
+        </div>
+      </div>

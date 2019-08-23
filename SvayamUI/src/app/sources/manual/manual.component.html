@@ -1,0 +1,296 @@
+<div class="container">
+    <div class="instruction" style="width: 90;height: 100;border: black solid 1.5px;margin: 15px">
+      <p style="margin-left: 8px"><b>1.</b> IN THIS SECTION YOU CAN FIRE EVENTS MANUALLY EITHER BY UPLOADING A FILE OF
+        EVENT RECORD OR BY INSERRTING ALL VALUE IN THE FORM. </p>
+      <p style="margin-left: 8px"> <b>2.</b> CLICK ON UPLOAD TO UPLOAD A FILE.</p>
+      <p style="margin-left: 8px"> <b>3.</b> CLICK ON MANUAL TO MANUALLY INSERT ALL VALUE.</p>
+    </div>
+    <div class="manual" style="margin-top: 5px">
+  
+      <table class="table table-hover">
+  
+  
+        <tbody>
+          <tr *ngFor="let obj of data;let i = index">
+            <td>{{ obj.ss_name}}</td>
+  
+            <td class="text-right">
+              <button class="btn btn-primary" (click)="openUpload()">Upload</button>
+              <button class="btn btn-danger" (click)="manual(obj)">Manual</button></td>
+            <td class="text-right">
+                <button class="btn btn-primary" (click)="demoStart(obj, i)" *ngIf="!obj.is_running" style="width:125px">START DEMO</button>
+                <button class="btn btn-danger" (click)="demoStop(obj, i)" *ngIf="obj.is_running" style="width:125px">STOP DEMO</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="modelId">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <mat-form-field>
+                <mat-label>Select product</mat-label>
+                <mat-select (selectionChange)="selectedProduct($event)">
+                  <mat-option *ngFor="let prodObj of prodArray" [value]="prodObj">
+                    {{prodObj.dtl_prod_desc}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field>
+                <mat-label>Select event</mat-label>
+                <mat-select (selectionChange)='selectedevent($event)'>
+                  <mat-option *ngFor="let eventObj of eventArray" [value]="eventObj">
+                    {{eventObj.ev_name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <form [formGroup]="searchForm" *ngIf='showArr || showSje'>
+            <div class="row">
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="Party Name" formControlName="name">
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="Product Code" formControlName="product">
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Arrangment Number" formControlName="arr_num">
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <div class="row">
+                  <div class="col-8">
+                    <mat-form-field>
+                      <input matInput placeholder="Customer Type" formControlName="cust_type">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col" style="text-align: center" >
+                <div>
+                  <button mat-raised-button color="primary" (click)="search()"><i class="fa fa-search"
+                      aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <form [formGroup]="arrForm" *ngIf="showArr">
+            <div class="row" id="form_row">
+              <div class="col">
+  
+                <mat-form-field>
+                  <input matInput placeholder="Party Name" formControlName="ip_name" />
+                </mat-form-field>
+              </div>
+  
+  
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="Party City" formControlName="ip_city_name" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" id="form_row">
+              <div class="col">
+                <mat-form-field>
+                  <mat-label> CUSTOMER Country</mat-label>
+                  <mat-select formControlName="ip_country" required (selectionChange)="selectCountry($event)">
+                    <mat-option *ngFor="let Obj of country_arr" [value]="Obj">{{Obj.country_name}}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col">
+  
+                <mat-form-field>
+                  <mat-label>CUSTOMER Type</mat-label>
+                  <mat-select formControlName="ip_dtl_cust_type_cd" required
+                  (selectionChange)="selectDtlType($event)">
+                  <mat-option *ngFor="let Obj of partyDtl_arr" [value]="Obj">{{Obj.dtl_customer_type_desc}}
+                  </mat-option>
+              </mat-select>
+                </mat-form-field>
+              </div>
+  
+            </div>
+            <div class="row" id="form_row">
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="Zip Code" formControlName="zip_cd">
+                  </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="Party Occupation" formControlName="occupation">
+                </mat-form-field>
+              </div>
+            </div>
+  
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary " (click)="validateArr()" >Submit</button>
+                <button  data-dismiss="modal" type="button" class="btn btn-danger">Cancel</button>
+              </div>
+  
+          </form>
+          <form [formGroup]="sjeForm" *ngIf="showSje">
+            <div class="row" id="form_row">
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="ARR_SRC_CODE" formControlName="arr_src_cd">
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="ARR_NUM" formControlName="arr_num">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" id="form_row">
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="Arr_Suf" formControlName="arr_suf">
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field>
+                  <input matInput placeholder="AMOUNT" formControlName="amt">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row" id="form_row">
+              <div class="col">
+                <mat-form-field>
+                  <mat-label> CURRENCY CODE</mat-label>
+                  <mat-select formControlName="tgt_curr_cd">
+                    <mat-option *ngFor="let Obj of country_arr" [value]="Obj">{{Obj.currency}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field>
+                  <mat-label>CUSTOMER TYPE</mat-label>
+                  <mat-select formControlName="dtl_cust_industry_cd">
+                    <mat-option *ngFor="let Obj of partyDtl_arr" [value]="Obj">{{Obj.dtl_customer_type_desc}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary " (click)="validateSje()" >Submit</button>
+              <button  data-dismiss="modal" type="button" class="btn btn-danger">Cancel</button>
+             <!--  <button routerLink="/source/manual" data-dismiss="modal" type="button" class="btn btn-danger">Cancel</button> -->
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+         <!--  <button type="button" class="btn btn-info" >Next</button> -->
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="modal fade" id="TableModal"  >
+    <div class="modal-dialog modal-full">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="TableModal">Searched Records</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="mat-elevation-z8" style="width: 100%">
+            <table mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="select">
+                    <th mat-header-cell *matHeaderCellDef> Select</th>
+                    <td mat-cell *matCellDef="let element">
+                         <mat-radio-button class="example-radio-button" (click)="selectedButton(element)">
+                    </mat-radio-button> 
+                </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Party Name</th>
+                    <td mat-cell *matCellDef="let element">{{element.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="arr_num">
+                    <th mat-header-cell *matHeaderCellDef> Arr Num</th>
+                    <td mat-cell *matCellDef="let element">{{element.arr_num}} </td>
+                </ng-container>
+                <ng-container matColumnDef="arr_suf">
+                        <th mat-header-cell *matHeaderCellDef>Arr Suf</th>
+                        <td mat-cell *matCellDef="let element">{{element.arr_suf}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="arr_src_cd">
+                        <th mat-header-cell *matHeaderCellDef> Arr Src Cd</th>
+                        <td mat-cell *matCellDef="let element">{{element.arr_src_cd}} </td>
+                    </ng-container>
+  
+                    <ng-container matColumnDef="prod_cd">
+                            <th mat-header-cell *matHeaderCellDef>Product Code</th>
+                            <td mat-cell *matCellDef="let element">{{element.prod_cd}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="dtl_prod_cd">
+                            <th mat-header-cell *matHeaderCellDef> Dtl Product Code</th>
+                            <td mat-cell *matCellDef="let element">{{element.dtl_prod_cd}} </td>
+                        </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="UploadModal"  >
+    <div class="modal-dialog modal-full">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="TableModal">Upload Event File</h5>
+  <!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+  <!--         <div class="instruction" style="width: 100;border: black solid 1.5px;margin-bottom: 15px">
+            <p style="margin-left: 8px"><b>1.</b> </p>
+            <p style="margin-left: 8px"> <b>2.</b> CLICK ON UPLOAD TO UPLOAD A FILE.</p>
+          </div> -->
+          <div class="row">
+            <div class="col" style="align-items: center">
+              <input #file  type="file" name="eventfile" ng2FileSelect [uploader]="uploader" class="form-control"  style="border-color: black"  (click)="onclick($event)" >
+            </div>
+            <div class="col" style="text-align:rights">
+              <button type="button" [disabled]="!uploader?.getNotUploadedItems().length" class="btn btn-success" (click)='uploadfile()' style="margin: 0px"><i class="fa fa-upload" aria-hidden="true">&nbsp;</i>Upload</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

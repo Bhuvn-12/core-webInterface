@@ -1,0 +1,35 @@
+-------------------------Reporting  Unit Query--------------------------------------------
+insert into ref_reporting_units (id,leaf_col_id,hierarchy_id,hierarchy_name,leaf_cd,leaf_desc,lvl1_cd,lvl1_desc,lvl2_cd,lvl2_desc,lvl3_cd,lvl3_desc) values('undefined','rpt_unit_no','RPT-001','Business-Unit-Heirarchy','B0001','Bhuvn','L1A-001','Svayam Holding Company','L2E-001','india','B0001','Bhuvn')
+---------------------------------------------------------------------
+insert into rpt_unit (SOURCE_SYSTEM,RPT_UNIT,IUE_COST_CENTER,BASE_CURRENCY,GAAP,PRESENTATION_CURRENCY) values ('IN','B0001','IUE0001','INR','USGP','GBP')
+1
+-----------------------------Get Products Query----------------------------------------
+select p.prod_id,lvl3_cd,lvl3_desc,lvl4_cd,lvl4_desc,lvl5_cd,lvl5_desc,off_balance_sheet_exposure_type,credit_conversion_factor from ind_xref_prod i join  products p on i.prod_id=p.prod_id where ind_id='1'
+---------------------------------------------------------------------
+-----------------------------Product Query----------------------------------------
+insert into prod_dtl (dtl_prod_cd,dtl_prod_desc,prod_cd,prod_desc,off_balance_sheet_exposure_type,credit_conversion_factor,ent_cd) values  ('210101010','CC','210101000','Credit Services','Asset sales with recourse','100','34570')
+---------------------------------------------------------------------
+insert into ref_product (id,leaf_col_id,hierarchy_id,hierarchy_name,leaf_cd,leaf_desc,lvl1_cd,lvl1_desc,lvl2_cd,lvl2_desc,lvl3_cd,lvl3_desc,org_unit_cd)  values ('1','Detail Product Code','PRDCT-001','Product_Heirarchy','undefined','CC','L1A-001','Trial Balance','210101000','Credit Services','210101010','CC','34570')
+---------------------------------------------------------------------
+-----------------------------Get Customer Query----------------------------------------
+select * from prod_xref_ip x join  ip_customer_type c on x.ip_cust_id=c.ip_cust_id where x.prod_id in (1)
+---------------------------------------------------------------------
+------------------------------Customer Query---------------------------------------
+insert into ref_customer_type (id,leaf_col_id,hierarchy_id,hierarchy_name,leaf_cd,leaf_desc,lvl1_cd,lvl1_desc,lvl2_cd,lvl2_desc,lvl3_cd,lvl3_desc,org_unit_cd)  values ('1','Detail Customer Type Code','CUST-001','Customer-Type-Heirarchy','10000','Individual/Personal/Consumer','L1A-001','Trial Balance','C10000','Individual/Personal/Consumer','10000','Individual/Personal/Consumer','34570') , ('4','Detail Customer Type Code','CUST-004','Customer-Type-Heirarchy','19999','Individual/Personal/Consumer','L1A-001','Trial Balance','C19999','Individual/Personal/Consumer','19999','Individual/Personal/Consumer','34570')
+---------------------------------------------------------------------
+insert into cust_details (cust_industry_cd,cust_industry_desc,cust_segment,lr_exposure_type,risk_weight,ent_cd)  values ('C10000','Individual/Personal/Consumer','Retail','Short term claims on governments','0','34570') ,  ('C19999','Individual/Personal/Consumer','Retail','Short term claims on governments','0' ,'34570')
+---------------------------------------------------------------------
+-----------------------------Get Events Query----------------------------------------
+select * from events_xref_prod x join  events e on x.ev_id=e.ev_id  where x.prod_id in (1)
+---------------------------------------------------------------------
+-----------------------------Event Query----------------------------------------
+insert into prod_events (prod_id,ev_name,ent_cd) values  ('1','Credit Care Expense','34570') , ('1','Bill Generate','34570') , ('1','Bill Payment','34570') , ('1','Penalty','34570') , ('1','Issue','34570')
+-----------------------------Get Account Query----------------------------------------
+select * from(select distinct (acc_id) from events_xref_accounts  where ev_id in (2,3,4,9,12,3,4,9,1)) s join accounts on s.acc_id=accounts.acc_id
+---------------------------------------------------------------------
+-----------------------------Accounts Query----------------------------------------
+insert into ref_chart_of_acc (id,leaf_col_id,hierarchy_id,hierarchy_name,leaf_cd,leaf_desc,lvl1_cd,lvl1_desc,lvl2_cd,lvl2_desc,lvl3_cd,lvl3_desc,lvl4_cd,lvl4_desc,ent_cd,org_unit_cd) values('undefined','1052400002','ACC-001','Chart_of_Account-Heirarchy','1052400002','Charge-offs - portfolio','L1A-001','Trial Balance','L2-001','Balance Sheet','L3A-001','ASSET','1052400002','Charge-offs - portfolio','34570') ,('undefined','2046700002','ACC-001','Chart_of_Account-Heirarchy','2046700002','IREC Equity','L1A-001','Trial Balance','L2-001','Balance Sheet','L3A-002','LIABILITY','2046700002','IREC Equity','34570')
+---------------------------------------------------------------------
+insert into account_info (account_number,account_description,account_type_cd,gaap_type_code,reclass_account_number,account_grp_cd,perfm_account_ind,trl_bal_ind,bsht_ind,incm_stmt_ind,memo_ind,carry_fwd_ind,lr_sub_cat,lr_exposure_type,ent_cd) values ('1052400002','Charge-offs - portfolio','ASSET','USGP','1052400002','1','N','Y','Y','N','N','Y','null','null','34570'),('1052400002','Charge-offs - portfolio','ASSET','UKGP','1052400002','1','N','Y','Y','N','N','Y','null','null','34570'),('1052400002','Charge-offs - portfolio','ASSET','HKGP','1052400002','1','N','Y','Y','N','N','Y','null','null','34570'),('1052400002','Charge-offs - portfolio','ASSET','CAGP','1052400002','1','N','Y','Y','N','N','Y','null','null','34570'),('1052400002','Charge-offs - portfolio','ASSET','INGP','1052400002','1','N','Y','Y','N','N','Y','null','null','34570') , ('2046700002','IREC Equity','LIABILITY','USGP','2046700002','1','N','Y','Y','N','N','Y','null','null','34570'),('2046700002','IREC Equity','LIABILITY','UKGP','2046700002','1','N','Y','Y','N','N','Y','null','null','34570'),('2046700002','IREC Equity','LIABILITY','HKGP','2046700002','1','N','Y','Y','N','N','Y','null','null','34570'),('2046700002','IREC Equity','LIABILITY','CAGP','2046700002','1','N','Y','Y','N','N','Y','null','null','34570'),('2046700002','IREC Equity','LIABILITY','INGP','2046700002','1','N','Y','Y','N','N','Y','null','null','34570')
+---------------------------------------------------------------------
+insert into  iue_account (LEDGER_ACC_CODE,ACCOUNT_TYPE,ON_BALANCESHEET_ACC,OFF_BALANCE_ACC,ent_cd) values('1052400002','ASSET','1052400002','1052400002','34570'),('2046700002','LIABILITY','2046700002','2046700002','34570')

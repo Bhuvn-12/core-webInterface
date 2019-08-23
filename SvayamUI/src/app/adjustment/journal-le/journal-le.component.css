@@ -1,0 +1,12 @@
+.contaner{
+  background: black;
+}
+.image{
+  height: 580px;
+  width: 100%;
+}
+.footer-link{
+  text-align: center;
+  width: 100%;
+  color: #007bff;
+}

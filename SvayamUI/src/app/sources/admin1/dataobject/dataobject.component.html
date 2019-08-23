@@ -1,0 +1,141 @@
+<div class='row' >
+  <div class='col'id='top_head'>
+      <h4>{{selectedObj?.model_name}}</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <table class="table table-bordered">
+        <tr>
+          <th>Data Objects Name</th>
+        </tr>
+        <tr *ngFor="let dataObject of keyArr; let i = index">
+          <td style="text-align: center;">
+            <button class="btn1" (click)="showDataObject(i,dataObject)">
+              {{dataObject}}
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">
+              <button type="submit" class="btn btn-primary" (click)="newDataObject()">New Object</button>
+          </td>
+        </tr>
+    </table> 
+  </div>
+  <div class="col-md-10">
+    <div class="col">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Column Desc</th>
+            <th>Data Type</th>
+            <th colspan="2"> Actions</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf='rows[0]?.id !== null'>
+              <tr *ngFor="let row of rows; let i = index" >
+                  <td>
+                    <input class="form-control" type='text'    [(ngModel)]="row.col_seq_no" [disabled]="row.is_disabled" required />
+                  </td>
+                  <td>
+                    <input class="form-control" type='text'    [(ngModel)]="row.column_name" [disabled]="row.is_disabled" required />
+                  </td>
+                  <td>
+                      <input class="form-control" type='text'  [(ngModel)]="row.column_desc"  [disabled]="row.is_disabled" required />
+                    </td>
+                  <td>
+                    <select class="custom-select"  [(ngModel)]="row.column_type" [disabled]="row.is_disabled">
+                          <option value="integer">Number</option>
+                          <option value="string">String</option>
+                          <option value="double">Double</option> 
+                          <option value="long">Long</option>
+                          <option value="date">Date</option> 
+                      </select>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-info" (click)="makeEditable(i,row)" *ngIf="row.is_disabled">Edit</button>
+                    <button type="button" class="btn btn-primary" (click)="saveChange(i,row)" *ngIf="!row.is_disabled">Save</button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteColumn(i,row)">Delete</button>
+                  </td>
+                </tr>
+          </ng-container>
+
+
+          <tr *ngIf="showNew">
+              <td>
+                <input class="form-control" [(ngModel)]="newrow.col_seq_no" [disabled]="newrow.is_disabled" />
+              </td>
+              <td>
+                <input class="form-control" type='text'    [(ngModel)]="newrow.column_name" [disabled]="newrow.is_disabled" required />
+              </td>
+              <td>
+                  <input class="form-control" type='text'  [(ngModel)]="newrow.column_desc"  [disabled]="newrow.is_disabled" required />
+                </td>
+              <td>
+                <select class="custom-select"   [(ngModel)]="newrow.column_type" [disabled]="newrow.is_disabled">
+                  <option value="integer">Number</option>
+                  <option value="string">String</option>
+                  <option value="double">Double</option> 
+                  <option value="long">Long</option>
+                  <option value="date">Date</option>  
+                  </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="addColumn(newrow)">Save</button>
+              </td>
+              <td>
+                <button type="button" class="btn btn-danger" (click)="deleteNew()">Delete</button>
+              </td>
+          </tr>
+
+          
+        </tbody>
+      </table>
+      <div style="margin-left: 40%">
+        <button type="submit" class="btn btn-primary" (click)="newColumn()">New</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Data Object Information -->
+<div class="modal fade" id='dataObjModal' tabindex="-1" role="dialog" aria-labelledby="dataObjModaLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="dataObjModal">Fill Rule Information</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class='col'>
+            <form [formGroup]="dataObjForm">
+                <div class="form-group">
+                    <label>Data Object  Name</label>
+                    <input type="text" formControlName="dataObjName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dataObjName.errors }" />
+                    <div *ngIf="submitted && f.dataObjName.errors" class="invalid-feedback">
+                        <div *ngIf="f.dataObjName.errors.required">Data Object Name is required</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary"  (click)="saveDataObject()">Save</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>

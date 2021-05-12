@@ -22,7 +22,7 @@
     "mysql": "^2.16.0",
     "no-kafka": "^3.4.3",
     "node-hive": "^0.1.1",
-    "nodemailer": "^6.1.1",
+    "nodemailer": "^6.4.16",
     "nools": "^0.4.4",
     "numeral": "^2.0.6",
     "properties-reader": "0.0.16",
